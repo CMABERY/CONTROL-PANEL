@@ -1,0 +1,9 @@
+{
+  "_comment": "Invalid: severity=warning requires default_resolution",
+  "_expected_error": "default_resolution",
+  "conflict_id": "660e8400-e29b-41d4-a716-446655440001",
+  "type": "presentation_overlap",
+  "selector": "node:xyz789",
+  "severity": "warning",
+  "allowed_resolutions": ["take_ours", "take_theirs"]
+}

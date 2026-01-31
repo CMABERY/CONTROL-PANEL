@@ -1,0 +1,26 @@
+{
+  "v": 1,
+  "session_id": "550e8400-e29b-41d4-a716-446655440000",
+  "type": "merge",
+  "base": "cpt_BASE_CHECKPOINT_ID",
+  "ours": "cpt_OURS_CHECKPOINT_ID",
+  "theirs": "cpt_THEIRS_CHECKPOINT_ID",
+  "status": "in_progress",
+  "conflicts": [
+    {
+      "conflict_id": "660e8400-e29b-41d4-a716-446655440001",
+      "type": "edit_edit",
+      "selector": "node:abc123",
+      "track": "behavioral",
+      "severity": "error",
+      "reason": "Both branches modified config.timeout",
+      "base": {"timeout": 30000},
+      "ours": {"timeout": 60000},
+      "theirs": {"timeout": 45000},
+      "allowed_resolutions": ["take_ours", "take_theirs", "manual_edit"]
+    }
+  ],
+  "resolutions": [],
+  "created_at": "2024-01-15T14:00:00Z",
+  "updated_at": "2024-01-15T14:00:00Z"
+}

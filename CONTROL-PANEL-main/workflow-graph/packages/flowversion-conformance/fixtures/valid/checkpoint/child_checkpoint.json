@@ -1,0 +1,16 @@
+{
+  "v": 1,
+  "checkpoint_id": "cpt_02HV4Y6Z7890ABCDEFGH",
+  "parents": ["cpt_01HV3X5Y6Z7890ABCDEF"],
+  "author": {
+    "user_id": "user_bob",
+    "display_name": "Bob Jones"
+  },
+  "message": "Add fraud check node before payment processing",
+  "tree": {
+    "state_hash": "def1234567890abcdef1234567890abcdef1234567890abcdef1234567890abc",
+    "behavioral_hash": "ef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcd"
+  },
+  "client_nonce": "nonce_20240115_103045_bob",
+  "created_at": "2024-01-15T10:30:45Z"
+}

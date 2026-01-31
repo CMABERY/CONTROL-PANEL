@@ -1,0 +1,37 @@
+{
+  "v": 1,
+  "valid": false,
+  "issues": [
+    {
+      "issue_id": "bb0e8400-e29b-41d4-a716-446655440006",
+      "code": "MISSING_REQUIRED_FIELD",
+      "message": "Node 'fraud_check' is missing required field 'config.api_endpoint'",
+      "severity": "error",
+      "atoms": ["node:fraud_check"],
+      "anchors": {
+        "field_path": "/config/api_endpoint"
+      },
+      "suggested_fix": {
+        "type": "add_field",
+        "path": "/config/api_endpoint",
+        "suggested_value": "https://api.example.com/fraud/v1"
+      }
+    },
+    {
+      "issue_id": "cc0e8400-e29b-41d4-a716-446655440007",
+      "code": "ORPHAN_EDGE",
+      "message": "Edge 'fraud_check->payment' references non-existent target node",
+      "severity": "error",
+      "atoms": ["edge:fraud_check->payment"]
+    },
+    {
+      "issue_id": "dd0e8400-e29b-41d4-a716-446655440008",
+      "code": "DEPRECATED_NODE_TYPE",
+      "message": "Node type 'legacy_transform' is deprecated",
+      "severity": "warning",
+      "atoms": ["node:legacy_step"]
+    }
+  ],
+  "state_hash": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+  "validated_at": "2024-01-15T14:15:00Z"
+}

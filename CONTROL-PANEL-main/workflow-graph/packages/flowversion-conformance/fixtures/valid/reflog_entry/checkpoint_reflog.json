@@ -1,0 +1,14 @@
+{
+  "v": 1,
+  "entry_id": "990e8400-e29b-41d4-a716-446655440004",
+  "ref": "refs/heads/main",
+  "old_value": "cpt_01HV3X5Y6Z7890ABCDEF",
+  "new_value": "cpt_02HV4Y6Z7890ABCDEFGH",
+  "action": "checkpoint",
+  "message": "checkpoint: Add fraud check node before payment processing",
+  "actor": {
+    "user_id": "user_bob",
+    "display_name": "Bob Jones"
+  },
+  "timestamp": "2024-01-15T10:30:45Z"
+}

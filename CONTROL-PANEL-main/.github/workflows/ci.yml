@@ -1,0 +1,108 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  flowversion-conformance:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: workflow-graph
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Lockfile must not contain internal registry URLs
+        run: |
+          if grep -q "applied-caas-gateway1.internal.api.openai.org" package-lock.json; then
+            echo "::error::package-lock.json contains internal registry URLs"
+            exit 1
+          fi
+          echo "Lockfile registry check passed"
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: workflow-graph/package-lock.json
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run tests
+        working-directory: workflow-graph/packages/flowversion-conformance
+        run: npm test
+      
+      - name: Validate fixtures
+        working-directory: workflow-graph/packages/flowversion-conformance
+        run: npm run validate
+
+  workflow-graph-adapter:
+    runs-on: ubuntu-latest
+    needs: flowversion-conformance
+    defaults:
+      run:
+        working-directory: workflow-graph
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: workflow-graph/package-lock.json
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run adapter conformance
+        working-directory: workflow-graph/packages/flowversion-conformance
+        env:
+          CONFORMANCE_CONFIG: ../workflow-graph-adapter/conformance/conformance.config.json
+        run: node --test src/adapter-conformance.test.js
+
+  cpo-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Check SQL file syntax (basic)
+        run: |
+          # Basic syntax check - verify all SQL files are valid UTF-8
+          find cpo/sql -name '*.sql' -exec file {} \; | grep -v 'UTF-8\|ASCII' && exit 1 || true
+          echo "SQL files syntax check passed"
+      
+      - name: Verify STATUS.json structure
+        run: |
+          python3 -c "
+          import json
+          with open('cpo/STATUS.json') as f:
+              data = json.load(f)
+          assert 'phases' in data, 'STATUS.json missing phases'
+          assert 'operational_mantra' in data, 'STATUS.json missing operational_mantra'
+          
+          # Valid phase states:
+          # - 'complete': phase has all artifacts in bundle
+          # - 'integrated_into_*': phase functionality subsumed by another phase
+          VALID_STATES = {'complete'}
+          INTEGRATED_PREFIX = 'integrated_into_'
+          
+          for phase in ['P1','P2','P3','P4','P5','P6','P7']:
+              assert phase in data['phases'], f'STATUS.json missing {phase}'
+              state = data['phases'][phase]['state']
+              is_valid = state in VALID_STATES or state.startswith(INTEGRATED_PREFIX)
+              assert is_valid, f'{phase} has invalid state: {state}'
+              
+              # If integrated, must have integrated_via evidence
+              if state.startswith(INTEGRATED_PREFIX):
+                  evidence = data['phases'][phase].get('evidence', {})
+                  assert 'integrated_via' in evidence, f'{phase} is {state} but missing integrated_via evidence'
+                  assert len(evidence['integrated_via']) > 0, f'{phase} has empty integrated_via'
+          
+          print('STATUS.json validation passed')
+          "

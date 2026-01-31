@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "project": "cpo-governance-kernel",
+  "updated_at": "2026-01-31T00:00:00Z",
+  "phases": {
+    "P1": {
+      "name": "Contracts / Policy Check Registry",
+      "state": "integrated_into_p2",
+      "evidence": {
+        "artifacts": [],
+        "proofs": [],
+        "integrated_via": [
+          "sql/migrations/006_commit_action_p3_surgical.sql",
+          "sql/patches/p2_artifact_table_registry_v3.sql"
+        ],
+        "invariants": ["INV-101", "INV-102", "INV-103"]
+      },
+      "notes": "P1 registry functionality is implicit in P2+ gate engine. Standalone P1 artifacts not included in this bundle."
+    },
+    "P2": {
+      "name": "Persistence / Write Aperture",
+      "state": "complete",
+      "evidence": {
+        "artifacts": [
+          "sql/migrations/006_commit_action_p3_surgical.sql",
+          "sql/patches/p2_artifact_table_registry_v3.sql",
+          "sql/patches/p2_durability_drill_wiring_v2_1.sql"
+        ],
+        "proofs": [
+          "sql/patches/p2_proof_write_aperture_coverage_v3.sql",
+          "sql/patches/p2_proof_durability_wiring.sql"
+        ],
+        "invariants": ["INV-201", "INV-202", "INV-203"]
+      },
+      "notes": "Single write aperture, append-only spine, artifact table registry"
+    },
+    "P3": {
+      "name": "Gate Integration / TOCTOU",
+      "state": "complete",
+      "evidence": {
+        "artifacts": [
+          "sql/migrations/009_commit_action_gate_integration_p3_surgical.sql",
+          "sql/patches/p3_toctou_bypass_removal_patch.sql",
+          "sql/patches/p3_gate_engine_missing_field_patch.sql"
+        ],
+        "proofs": [
+          "sql/proofs/p3_ci_guard_no_semantic_toctou_bypass.sql",
+          "sql/patches/p3_proof_toctou_closed.sql",
+          "sql/patches/p3_proof_no_semantic_bypass.sql",
+          "sql/patches/p3_proof_resolved_inputs_required.sql",
+          "sql/patches/p3_proof_default_deny_fail_closed.sql",
+          "sql/patches/p3_proof_kernel_non_exceptionable.sql",
+          "sql/patches/p3_proof_error_bypasses_exceptions.sql",
+          "sql/patches/p3_proof_missing_field_semantics.sql"
+        ],
+        "invariants": ["INV-301", "INV-302", "INV-303", "INV-304", "INV-305"]
+      },
+      "notes": "No semantic privilege via action_type; TOCTOU for all non-bootstrap"
+    },
+    "P4": {
+      "name": "Exception Expiry / Authority",
+      "state": "complete",
+      "evidence": {
+        "artifacts": ["sql/patches/p4_exception_expiry_enforcement_v3.sql"],
+        "proofs": ["sql/patches/p4_exception_expiry_proofs_v3.sql"],
+        "invariants": ["INV-401", "INV-402", "INV-403", "INV-404", "INV-405", "INV-406"]
+      },
+      "notes": "Exceptions are time-bounded authority; knife-edge expiry; no zombies"
+    },
+    "P5": {
+      "name": "Drift Detection",
+      "state": "complete",
+      "evidence": {
+        "artifacts": ["sql/patches/011_drift_detection.sql"],
+        "proofs": ["sql/patches/011_drift_detection_selftest.sql"],
+        "invariants": ["INV-501", "INV-502", "INV-503", "INV-504"]
+      },
+      "notes": "All 4 drift signals proven; SYSTEM gated; dedupe deterministic"
+    },
+    "P6": {
+      "name": "Change Control",
+      "state": "complete",
+      "version": "v3.1",
+      "evidence": {
+        "artifacts": ["sql/patches/p6_change_control_kernel_patch.sql"],
+        "proofs": [
+          "sql/patches/p6_change_control_proofs.sql",
+          "sql/patches/p6_ci_guard_change_control.sql"
+        ],
+        "invariants": ["INV-601", "INV-602", "INV-603", "INV-604", "INV-605", "INV-606"]
+      },
+      "notes": "Charter mutation as kernel physics; uses CHARTER_AMENDMENT (v3.1 aligned)"
+    },
+    "P7": {
+      "name": "Release Closure Pipeline",
+      "state": "complete",
+      "evidence": {
+        "artifacts": [
+          "scripts/p7_ci_pipeline.sh",
+          "sql/p7_evidence_pack.sql",
+          "sql/p7_privilege_audit.sql"
+        ],
+        "invariants": ["INV-701"]
+      },
+      "notes": "Every commit re-proves the world; no false-green"
+    }
+  },
+  "operational_mantra": [
+    "Authority is authenticated.",
+    "Physics outranks policy.",
+    "Enumerations are structural.",
+    "Evaluation is closed-world.",
+    "Exceptions are expiring authority.",
+    "Drift becomes ledger artifacts.",
+    "Change control governs the rules.",
+    "Every commit re-proves the world."
+  ]
+}

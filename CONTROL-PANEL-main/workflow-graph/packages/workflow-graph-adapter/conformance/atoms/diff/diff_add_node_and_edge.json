@@ -1,0 +1,50 @@
+{
+  "name": "diff_add_node_and_edge",
+  "from": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "start"
+      },
+      {
+        "id": "end",
+        "type": "end"
+      }
+    ],
+    "edges": [
+      {
+        "from": "start",
+        "to": "end"
+      }
+    ]
+  },
+  "to": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "start"
+      },
+      {
+        "id": "task1",
+        "type": "task",
+        "config": {
+          "task_key": "t1"
+        }
+      },
+      {
+        "id": "end",
+        "type": "end"
+      }
+    ],
+    "edges": [
+      {
+        "from": "start",
+        "to": "task1"
+      },
+      {
+        "from": "task1",
+        "to": "end"
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "flowversion-workflow-graph-reference",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "npm -w workflow-graph-adapter-reference test",
+    "gen:domain-goldens": "npm -w workflow-graph-adapter-reference run gen:domain-goldens"
+  }
+}

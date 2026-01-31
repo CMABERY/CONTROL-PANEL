@@ -1,0 +1,170 @@
+{
+  "_meta": {
+    "spec_version": "0.1.0",
+    "canon_version": "0.1.0",
+    "generated_at": "2026-01-29T21:36:28Z",
+    "generator": "flowversion-conformance"
+  },
+  "version": 1,
+  "vectors": [
+    {
+      "name": "key_ordering_mixed_case",
+      "notes": "Lexicographic key ordering (Unicode code point).",
+      "input": {
+        "zebra": 1,
+        "apple": 2,
+        "mango": 3,
+        "Banana": 4
+      },
+      "canonical_json": "{\"Banana\":4,\"apple\":2,\"mango\":3,\"zebra\":1}",
+      "sha256": "fb69e63a592bdcba067c3e9fc508e67d85d0245d001fe2c46da5bb038c96dc7b"
+    },
+    {
+      "name": "uuid_normalization",
+      "notes": "UUIDs lowercased.",
+      "input": {
+        "id": "A1B2C3D4-E5F6-7890-ABCD-EF1234567890"
+      },
+      "canonical_json": "{\"id\":\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"}",
+      "sha256": "ebb666d3a7df5489a27832eabc37435d1630a8dca5da65bef5ca5be060f00c3a"
+    },
+    {
+      "name": "hash_normalization",
+      "notes": "Hash256 strings lowercased.",
+      "input": {
+        "hash": "ABCDEF1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF1234567890"
+      },
+      "canonical_json": "{\"hash\":\"abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890\"}",
+      "sha256": "c2a19f116af7780b5a1d641448521ce6930e8b080a55f4eb93a49dddc598d539"
+    },
+    {
+      "name": "timestamp_normalization_offset",
+      "notes": "Offsets normalized to UTC Z, .000 trimmed.",
+      "input": {
+        "created_at": "2024-01-15T10:00:00-08:00"
+      },
+      "canonical_json": "{\"created_at\":\"2024-01-15T18:00:00Z\"}",
+      "sha256": "db55b0d92a8e97773d5b13a7ac717c4fdf5c0e8621861c0ad300a3ea3f9c84f7"
+    },
+    {
+      "name": "timestamp_preserve_milliseconds",
+      "notes": "Milliseconds preserved when non-zero.",
+      "input": {
+        "created_at": "2024-01-15T18:00:00.123Z"
+      },
+      "canonical_json": "{\"created_at\":\"2024-01-15T18:00:00.123Z\"}",
+      "sha256": "f0c627ebec7e6b828bb6aaf4a0546aedf04d0ab7bf2d503e5106797265aa3830"
+    },
+    {
+      "name": "nested_structures",
+      "notes": "Key ordering at every object boundary; arrays preserve order.",
+      "input": {
+        "outer": {
+          "inner": [
+            {
+              "b": 2,
+              "a": 1
+            },
+            null,
+            true,
+            "X"
+          ]
+        },
+        "n": 7
+      },
+      "canonical_json": "{\"n\":7,\"outer\":{\"inner\":[{\"a\":1,\"b\":2},null,true,\"X\"]}}",
+      "sha256": "a452bafa938283544a5f2441e5f3bcfb920cab5c8bbcb903c80b06b8ca009dff"
+    },
+    {
+      "name": "array_order_preserved",
+      "notes": "Arrays not sorted; objects inside arrays canonicalized.",
+      "input": [
+        3,
+        2,
+        1,
+        {
+          "b": 2,
+          "a": 1
+        }
+      ],
+      "canonical_json": "[3,2,1,{\"a\":1,\"b\":2}]",
+      "sha256": "85fa12d00a9e3d3fee0f86fa9d03757562e5d0e0b758c16cae83cdf72794ebbc"
+    },
+    {
+      "name": "empty_object",
+      "notes": "Empty object canonical JSON.",
+      "input": {},
+      "canonical_json": "{}",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "name": "empty_array",
+      "notes": "Empty array canonical JSON.",
+      "input": [],
+      "canonical_json": "[]",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "name": "null_literal",
+      "notes": "Null canonical JSON.",
+      "input": null,
+      "canonical_json": "null",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "name": "integer_boundaries_safe_range",
+      "notes": "Safe integer boundary values.",
+      "input": {
+        "min": -9007199254740991,
+        "max": 9007199254740991
+      },
+      "canonical_json": "{\"max\":9007199254740991,\"min\":-9007199254740991}",
+      "sha256": "63546eb60913dcb1cdd5118f7bf4885beed344af930c8a9d5f38fad243fd4819"
+    },
+    {
+      "name": "string_escaping",
+      "notes": "JSON escaping + Unicode preservation.",
+      "input": {
+        "text": "quote\" newline\n tab\t backslash\\ unicode\u2713"
+      },
+      "canonical_json": "{\"text\":\"quote\\\" newline\\n tab\\t backslash\\\\ unicode\u2713\"}",
+      "sha256": "c3c8c6c6e36576099ee13c4ca976030944a045c6d32c4650a54ee8c4308b5ae7"
+    },
+    {
+      "name": "absent_sentinel_object",
+      "notes": "Sentinel object used for ABSENT hashing.",
+      "input": {
+        "__fv_absent": true
+      },
+      "canonical_json": "{\"__fv_absent\":true}",
+      "sha256": "9f14cc648d4db7ac220169366959602b661c42ad0e9e409af441a68f45c8a095"
+    },
+    {
+      "name": "mixed_normalization_combo",
+      "notes": "Key ordering + UUID/hash/timestamp normalization + nested ordering.",
+      "input": {
+        "id": "A1B2C3D4-E5F6-7890-ABCD-EF1234567890",
+        "created_at": "2024-01-15T10:00:00-08:00",
+        "blob": "ABCDEF1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF1234567890",
+        "data": {
+          "z": 2,
+          "a": 1
+        }
+      },
+      "canonical_json": "{\"blob\":\"abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890\",\"created_at\":\"2024-01-15T18:00:00Z\",\"data\":{\"a\":1,\"z\":2},\"id\":\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\"}",
+      "sha256": "bd185315812ad2411f6dc6dd042e236c9dfdea1aa8ad7e59517151bae4708e57"
+    },
+    {
+      "name": "unicode_key_ordering",
+      "notes": "Unicode code point ordering demonstration.",
+      "input": {
+        "a": 1,
+        "\u00e4": 2,
+        "A": 3,
+        "\ud83d\ude0a": 4
+      },
+      "canonical_json": "{\"A\":3,\"a\":1,\"\u00e4\":2,\"\ud83d\ude0a\":4}",
+      "sha256": "d7ec82749bf52f091d970f058bb84b5500c5ba6350b7e12116fee084b7239577"
+    }
+  ]
+}

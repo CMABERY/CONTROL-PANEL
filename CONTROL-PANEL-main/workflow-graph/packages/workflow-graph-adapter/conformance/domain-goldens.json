@@ -1,0 +1,375 @@
+{
+  "_meta": {
+    "spec_version": "0.1.0",
+    "canon_version": "0.1.0",
+    "generated_at": "2026-01-29T21:36:28Z",
+    "generator": "flowversion-conformance"
+  },
+  "version": 1,
+  "vectors": [
+    {
+      "name": "minimal_linear_workflow",
+      "input": {
+        "name": "Onboarding",
+        "nodes": [
+          {
+            "id": "end",
+            "type": "end",
+            "label": "Done"
+          },
+          {
+            "id": "start",
+            "type": "start",
+            "label": "Start"
+          },
+          {
+            "id": "task1",
+            "type": "task",
+            "label": "Collect info",
+            "config": {
+              "task_key": "collect_info"
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "task1",
+            "to": "end"
+          },
+          {
+            "from": "start",
+            "to": "task1"
+          }
+        ]
+      },
+      "canonical_json": "{\"edges\":[{\"from\":\"start\",\"id\":\"start->task1\",\"to\":\"task1\",\"type\":\"flow\"},{\"from\":\"task1\",\"id\":\"task1->end\",\"to\":\"end\",\"type\":\"flow\"}],\"kind\":\"workflow_graph@1\",\"name\":\"Onboarding\",\"nodes\":[{\"config\":{},\"id\":\"end\",\"label\":\"Done\",\"type\":\"end\"},{\"config\":{},\"id\":\"start\",\"label\":\"Start\",\"type\":\"start\"},{\"config\":{\"task_key\":\"collect_info\"},\"id\":\"task1\",\"label\":\"Collect info\",\"type\":\"task\"}]}",
+      "sha256": "f61cddf12abead4fdec15577d8bfbbfc4e9814892b86e780f1d3575cdadf2602"
+    },
+    {
+      "name": "node_ordering_and_key_order",
+      "input": {
+        "nodes": [
+          {
+            "type": "task",
+            "id": "b",
+            "config": {
+              "task_key": "b",
+              "z": 2,
+              "a": 1
+            }
+          },
+          {
+            "type": "task",
+            "id": "a",
+            "config": {
+              "task_key": "a",
+              "k2": 2,
+              "k1": 1
+            }
+          },
+          {
+            "type": "start",
+            "id": "start"
+          },
+          {
+            "type": "end",
+            "id": "end"
+          }
+        ],
+        "edges": [
+          {
+            "from": "start",
+            "to": "b"
+          },
+          {
+            "from": "b",
+            "to": "a"
+          },
+          {
+            "from": "a",
+            "to": "end"
+          }
+        ]
+      },
+      "canonical_json": "{\"edges\":[{\"from\":\"a\",\"id\":\"a->end\",\"to\":\"end\",\"type\":\"flow\"},{\"from\":\"b\",\"id\":\"b->a\",\"to\":\"a\",\"type\":\"flow\"},{\"from\":\"start\",\"id\":\"start->b\",\"to\":\"b\",\"type\":\"flow\"}],\"kind\":\"workflow_graph@1\",\"nodes\":[{\"config\":{\"k1\":1,\"k2\":2,\"task_key\":\"a\"},\"id\":\"a\",\"type\":\"task\"},{\"config\":{\"a\":1,\"task_key\":\"b\",\"z\":2},\"id\":\"b\",\"type\":\"task\"},{\"config\":{},\"id\":\"end\",\"type\":\"end\"},{\"config\":{},\"id\":\"start\",\"type\":\"start\"}]}",
+      "sha256": "1b2ba62aa3c45f4524a281d962829da08c50464a8b9beb0d3481842795d2f3dc"
+    },
+    {
+      "name": "edge_default_id_computation",
+      "input": {
+        "nodes": [
+          {
+            "id": "start",
+            "type": "start"
+          },
+          {
+            "id": "x",
+            "type": "task",
+            "config": {
+              "task_key": "x"
+            }
+          },
+          {
+            "id": "end",
+            "type": "end"
+          }
+        ],
+        "edges": [
+          {
+            "from": "start",
+            "to": "x",
+            "id": "custom1"
+          },
+          {
+            "from": "x",
+            "to": "end"
+          }
+        ]
+      },
+      "canonical_json": "{\"edges\":[{\"from\":\"start\",\"id\":\"custom1\",\"to\":\"x\",\"type\":\"flow\"},{\"from\":\"x\",\"id\":\"x->end\",\"to\":\"end\",\"type\":\"flow\"}],\"kind\":\"workflow_graph@1\",\"nodes\":[{\"config\":{},\"id\":\"end\",\"type\":\"end\"},{\"config\":{},\"id\":\"start\",\"type\":\"start\"},{\"config\":{\"task_key\":\"x\"},\"id\":\"x\",\"type\":\"task\"}]}",
+      "sha256": "6b7b3103da24501ffb44d826aa796f4deadf8e30f1f10dec923fb507a876b309"
+    },
+    {
+      "name": "timestamp_normalization_in_meta",
+      "input": {
+        "meta": {
+          "updated_at": "2024-01-15T10:00:00-08:00",
+          "created_at": "2024-01-15T18:00:00Z"
+        },
+        "nodes": [
+          {
+            "id": "start",
+            "type": "start"
+          },
+          {
+            "id": "end",
+            "type": "end"
+          }
+        ],
+        "edges": [
+          {
+            "from": "start",
+            "to": "end"
+          }
+        ]
+      },
+      "canonical_json": "{\"edges\":[{\"from\":\"start\",\"id\":\"start->end\",\"to\":\"end\",\"type\":\"flow\"}],\"kind\":\"workflow_graph@1\",\"meta\":{\"created_at\":\"2024-01-15T18:00:00Z\",\"updated_at\":\"2024-01-15T18:00:00Z\"},\"nodes\":[{\"config\":{},\"id\":\"end\",\"type\":\"end\"},{\"config\":{},\"id\":\"start\",\"type\":\"start\"}]}",
+      "sha256": "e3f8ef61abf522028c8022ff4b7a7f89ca87ad58990c2cadc1748b911034dacc"
+    },
+    {
+      "name": "uuid_normalization_uppercase",
+      "input": {
+        "meta": {
+          "owner_uuid": "A0B1C2D3-E4F5-6789-ABCD-0123456789AB"
+        },
+        "nodes": [
+          {
+            "id": "start",
+            "type": "start"
+          },
+          {
+            "id": "end",
+            "type": "end"
+          }
+        ],
+        "edges": [
+          {
+            "from": "start",
+            "to": "end"
+          }
+        ]
+      },
+      "canonical_json": "{\"edges\":[{\"from\":\"start\",\"id\":\"start->end\",\"to\":\"end\",\"type\":\"flow\"}],\"kind\":\"workflow_graph@1\",\"meta\":{\"owner_uuid\":\"a0b1c2d3-e4f5-6789-abcd-0123456789ab\"},\"nodes\":[{\"config\":{},\"id\":\"end\",\"type\":\"end\"},{\"config\":{},\"id\":\"start\",\"type\":\"start\"}]}",
+      "sha256": "65abec1e2e5734f41b769eb1d9d56986f73426c616be2c642c25670be937b853"
+    },
+    {
+      "name": "hash_normalization_uppercase_64hex",
+      "input": {
+        "meta": {
+          "last_checkpoint_hash": "ABCDEF1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF1234567890"
+        },
+        "nodes": [
+          {
+            "id": "start",
+            "type": "start"
+          },
+          {
+            "id": "end",
+            "type": "end"
+          }
+        ],
+        "edges": [
+          {
+            "from": "start",
+            "to": "end"
+          }
+        ]
+      },
+      "canonical_json": "{\"edges\":[{\"from\":\"start\",\"id\":\"start->end\",\"to\":\"end\",\"type\":\"flow\"}],\"kind\":\"workflow_graph@1\",\"meta\":{\"last_checkpoint_hash\":\"abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890\"},\"nodes\":[{\"config\":{},\"id\":\"end\",\"type\":\"end\"},{\"config\":{},\"id\":\"start\",\"type\":\"start\"}]}",
+      "sha256": "3ad826ea2aeb2adb0678468d17738dfab6499d83d7bd19627c38faba632590dc"
+    },
+    {
+      "name": "nested_config_structures",
+      "input": {
+        "nodes": [
+          {
+            "id": "start",
+            "type": "start"
+          },
+          {
+            "id": "decision",
+            "type": "task",
+            "label": "Decide",
+            "config": {
+              "task_key": "decide",
+              "rules": [
+                {
+                  "if": {
+                    "field": "score",
+                    "op": ">=",
+                    "value": 700
+                  },
+                  "then": "approve"
+                },
+                {
+                  "if": {
+                    "field": "score",
+                    "op": "<",
+                    "value": 700
+                  },
+                  "then": "review"
+                }
+              ]
+            }
+          },
+          {
+            "id": "end",
+            "type": "end"
+          }
+        ],
+        "edges": [
+          {
+            "from": "start",
+            "to": "decision"
+          },
+          {
+            "from": "decision",
+            "to": "end"
+          }
+        ]
+      },
+      "canonical_json": "{\"edges\":[{\"from\":\"decision\",\"id\":\"decision->end\",\"to\":\"end\",\"type\":\"flow\"},{\"from\":\"start\",\"id\":\"start->decision\",\"to\":\"decision\",\"type\":\"flow\"}],\"kind\":\"workflow_graph@1\",\"nodes\":[{\"config\":{\"rules\":[{\"if\":{\"field\":\"score\",\"op\":\">=\",\"value\":700},\"then\":\"approve\"},{\"if\":{\"field\":\"score\",\"op\":\"<\",\"value\":700},\"then\":\"review\"}],\"task_key\":\"decide\"},\"id\":\"decision\",\"label\":\"Decide\",\"type\":\"task\"},{\"config\":{},\"id\":\"end\",\"type\":\"end\"},{\"config\":{},\"id\":\"start\",\"type\":\"start\"}]}",
+      "sha256": "56df77b75aa750d29dfc5b89b72fd2719015c913450d709e39f43c8db484b5be"
+    },
+    {
+      "name": "multiple_edges_explicit_ids_sorted",
+      "input": {
+        "nodes": [
+          {
+            "id": "start",
+            "type": "start"
+          },
+          {
+            "id": "a",
+            "type": "task",
+            "config": {
+              "task_key": "a"
+            }
+          },
+          {
+            "id": "b",
+            "type": "task",
+            "config": {
+              "task_key": "b"
+            }
+          },
+          {
+            "id": "end",
+            "type": "end"
+          }
+        ],
+        "edges": [
+          {
+            "id": "e2",
+            "from": "a",
+            "to": "end"
+          },
+          {
+            "id": "e1",
+            "from": "start",
+            "to": "a"
+          },
+          {
+            "id": "e3",
+            "from": "start",
+            "to": "b"
+          },
+          {
+            "id": "e4",
+            "from": "b",
+            "to": "end"
+          }
+        ]
+      },
+      "canonical_json": "{\"edges\":[{\"from\":\"start\",\"id\":\"e1\",\"to\":\"a\",\"type\":\"flow\"},{\"from\":\"a\",\"id\":\"e2\",\"to\":\"end\",\"type\":\"flow\"},{\"from\":\"start\",\"id\":\"e3\",\"to\":\"b\",\"type\":\"flow\"},{\"from\":\"b\",\"id\":\"e4\",\"to\":\"end\",\"type\":\"flow\"}],\"kind\":\"workflow_graph@1\",\"nodes\":[{\"config\":{\"task_key\":\"a\"},\"id\":\"a\",\"type\":\"task\"},{\"config\":{\"task_key\":\"b\"},\"id\":\"b\",\"type\":\"task\"},{\"config\":{},\"id\":\"end\",\"type\":\"end\"},{\"config\":{},\"id\":\"start\",\"type\":\"start\"}]}",
+      "sha256": "a66cfeb42588c51c086060d5a2c082c086dbc73ab650776ad6ec0b4dfb65c10f"
+    },
+    {
+      "name": "node_meta_preserved_and_canonicalized",
+      "input": {
+        "nodes": [
+          {
+            "id": "start",
+            "type": "start",
+            "meta": {
+              "z": 2,
+              "a": 1
+            }
+          },
+          {
+            "id": "task",
+            "type": "task",
+            "config": {
+              "task_key": "t"
+            },
+            "meta": {
+              "tags": [
+                "b",
+                "a"
+              ]
+            }
+          },
+          {
+            "id": "end",
+            "type": "end"
+          }
+        ],
+        "edges": [
+          {
+            "from": "start",
+            "to": "task"
+          },
+          {
+            "from": "task",
+            "to": "end"
+          }
+        ]
+      },
+      "canonical_json": "{\"edges\":[{\"from\":\"start\",\"id\":\"start->task\",\"to\":\"task\",\"type\":\"flow\"},{\"from\":\"task\",\"id\":\"task->end\",\"to\":\"end\",\"type\":\"flow\"}],\"kind\":\"workflow_graph@1\",\"nodes\":[{\"config\":{},\"id\":\"end\",\"type\":\"end\"},{\"config\":{},\"id\":\"start\",\"meta\":{\"a\":1,\"z\":2},\"type\":\"start\"},{\"config\":{\"task_key\":\"t\"},\"id\":\"task\",\"meta\":{\"tags\":[\"b\",\"a\"]},\"type\":\"task\"}]}",
+      "sha256": "7d324dbeffe786537a9d4ed0cf36639cd0618ddba9b760227ecbcbd26274c2a9"
+    },
+    {
+      "name": "pass_through_non_domain_value",
+      "input": {
+        "z": 2,
+        "a": 1,
+        "nested": {
+          "b": 2,
+          "a": 1
+        }
+      },
+      "canonical_json": "{\"a\":1,\"nested\":{\"a\":1,\"b\":2},\"z\":2}",
+      "sha256": "76ef751532ace9d521edc25edbe27b276cc88a4a54cfe152393d8b88acdff475"
+    }
+  ]
+}

@@ -1,0 +1,173 @@
+
+> keystone-gate-runtime@0.1.0 test
+> node --test test/*.test.js
+
+TAP version 13
+# Subtest: IT-FV-HASH-001: FlowVersion canonicalization + hashing matches goldens
+    # Subtest: e2e_allow_model_call_ok steps hash deterministically
+    ok 1 - e2e_allow_model_call_ok steps hash deterministically
+      ---
+      duration_ms: 81.213264
+      type: 'test'
+      ...
+    # Subtest: e2e_allow_tool_call_ok steps hash deterministically
+    ok 2 - e2e_allow_tool_call_ok steps hash deterministically
+      ---
+      duration_ms: 1.293112
+      type: 'test'
+      ...
+    1..2
+ok 1 - IT-FV-HASH-001: FlowVersion canonicalization + hashing matches goldens
+  ---
+  duration_ms: 83.417408
+  type: 'suite'
+  ...
+# Subtest: IT-CPO-ACCEPT-001: AuthContext accepted and persisted
+    # Subtest: commit_action accepts auth_context when declared hash matches
+    ok 1 - commit_action accepts auth_context when declared hash matches
+      ---
+      duration_ms: 0.659451
+      type: 'test'
+      ...
+    1..1
+ok 2 - IT-CPO-ACCEPT-001: AuthContext accepted and persisted
+  ---
+  duration_ms: 0.780955
+  type: 'suite'
+  ...
+# Subtest: IT-CPO-ACCEPT-002: PolicyDecision accepted only with existing AuthContext
+    # Subtest: policy_decision rejected when auth prereq missing
+    ok 1 - policy_decision rejected when auth prereq missing
+      ---
+      duration_ms: 0.423142
+      type: 'test'
+      ...
+    # Subtest: policy_decision accepted when auth prereq exists
+    ok 2 - policy_decision accepted when auth prereq exists
+      ---
+      duration_ms: 0.383942
+      type: 'test'
+      ...
+    1..2
+ok 3 - IT-CPO-ACCEPT-002: PolicyDecision accepted only with existing AuthContext
+  ---
+  duration_ms: 1.035848
+  type: 'suite'
+  ...
+# Subtest: IT-CPO-ACCEPT-003: ModelCall accepted only with allow policy and trace continuity
+    # Subtest: model_call accepted end-to-end (auth -> pd allow -> model_call ok)
+    ok 1 - model_call accepted end-to-end (auth -> pd allow -> model_call ok)
+      ---
+      duration_ms: 1.400418
+      type: 'test'
+      ...
+    # Subtest: model_call rejected when declared hash mismatches computed hash
+    ok 2 - model_call rejected when declared hash mismatches computed hash
+      ---
+      duration_ms: 0.845159
+      type: 'test'
+      ...
+    # Subtest: model_call rejected when trace_id differs from prereqs
+    ok 3 - model_call rejected when trace_id differs from prereqs
+      ---
+      duration_ms: 0.770773
+      type: 'test'
+      ...
+    # Subtest: model_call rejected when policy_decision prereq missing
+    ok 4 - model_call rejected when policy_decision prereq missing
+      ---
+      duration_ms: 0.483291
+      type: 'test'
+      ...
+    1..4
+ok 4 - IT-CPO-ACCEPT-003: ModelCall accepted only with allow policy and trace continuity
+  ---
+  duration_ms: 4.020496
+  type: 'suite'
+  ...
+# Subtest: IT-ADAPTER-ACCEPT-001: ToolCall accepted only with allow policy and trace continuity
+    # Subtest: tool_call accepted end-to-end (auth -> pd allow -> tool_call ok)
+    ok 1 - tool_call accepted end-to-end (auth -> pd allow -> tool_call ok)
+      ---
+      duration_ms: 0.501912
+      type: 'test'
+      ...
+    # Subtest: tool_call rejected when policy decision is deny
+    ok 2 - tool_call rejected when policy decision is deny
+      ---
+      duration_ms: 0.603521
+      type: 'test'
+      ...
+    1..2
+ok 5 - IT-ADAPTER-ACCEPT-001: ToolCall accepted only with allow policy and trace continuity
+  ---
+  duration_ms: 1.224079
+  type: 'suite'
+  ...
+# Subtest: IT-SCHEMA-REJECT-001: Schema rejects are terminal and non-persistent
+    # Subtest: missing trace_id -> SCHEMA_REJECT and not stored
+    ok 1 - missing trace_id -> SCHEMA_REJECT and not stored
+      ---
+      duration_ms: 0.364968
+      type: 'test'
+      ...
+    # Subtest: extra unknown field -> SCHEMA_REJECT
+    ok 2 - extra unknown field -> SCHEMA_REJECT
+      ---
+      duration_ms: 0.161706
+      type: 'test'
+      ...
+    1..2
+ok 6 - IT-SCHEMA-REJECT-001: Schema rejects are terminal and non-persistent
+  ---
+  duration_ms: 0.620402
+  type: 'suite'
+  ...
+# Subtest: IT-RECORD-TYPE-001: Unknown record types are forbidden
+    # Subtest: unknown record_type -> RECORD_TYPE_FORBIDDEN
+    ok 1 - unknown record_type -> RECORD_TYPE_FORBIDDEN
+      ---
+      duration_ms: 0.143543
+      type: 'test'
+      ...
+    1..1
+ok 7 - IT-RECORD-TYPE-001: Unknown record types are forbidden
+  ---
+  duration_ms: 0.200808
+  type: 'suite'
+  ...
+# Subtest: PHASE4: Cross-layer conformance (gate-enforced)
+    # Subtest: All conformance vectors satisfy expected canonical bytes, hash, and CPO classification
+    ok 1 - All conformance vectors satisfy expected canonical bytes, hash, and CPO classification
+      ---
+      duration_ms: 100.028783
+      type: 'test'
+      ...
+    1..1
+ok 8 - PHASE4: Cross-layer conformance (gate-enforced)
+  ---
+  duration_ms: 100.911308
+  type: 'suite'
+  ...
+# Subtest: PHASE4: Adapter certification (binary pass/fail)
+    # Subtest: Certify adapter.http@1.0.0-test end-to-end and emit certification artifact
+    ok 1 - Certify adapter.http@1.0.0-test end-to-end and emit certification artifact
+      ---
+      duration_ms: 1.24135
+      type: 'test'
+      ...
+    1..1
+ok 9 - PHASE4: Adapter certification (binary pass/fail)
+  ---
+  duration_ms: 1.363193
+  type: 'suite'
+  ...
+1..9
+# tests 16
+# suites 9
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1084.626929

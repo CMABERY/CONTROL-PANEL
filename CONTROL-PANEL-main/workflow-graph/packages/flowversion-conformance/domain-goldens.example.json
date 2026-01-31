@@ -1,0 +1,28 @@
+{
+  "_meta": {
+    "spec_version": "0.1.0",
+    "canon_version": "0.1.0",
+    "generated_at": "YYYY-MM-DDTHH:MM:SSZ",
+    "generator": "flowversion-conformance"
+  },
+  "version": 1,
+  "vectors": [
+    {
+      "name": "example_key_ordering",
+      "input": {
+        "b": 2,
+        "a": 1
+      },
+      "canonical_json": "{\"a\":1,\"b\":2}",
+      "sha256": "<fill by running npm run gen:domain-goldens>"
+    },
+    {
+      "name": "example_timestamp_normalization",
+      "input": {
+        "ts": "2024-01-15T10:00:00-08:00"
+      },
+      "canonical_json": "{\"ts\":\"2024-01-15T18:00:00Z\"}",
+      "sha256": "<fill by running npm run gen:domain-goldens>"
+    }
+  ]
+}

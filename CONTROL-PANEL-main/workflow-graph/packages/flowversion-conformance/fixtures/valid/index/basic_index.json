@@ -1,0 +1,27 @@
+{
+  "v": 1,
+  "base_checkpoint": "cpt_01HV3X5Y6Z7890ABCDEF",
+  "entries": [
+    {
+      "selector": "node:abc123",
+      "expanded_atoms": [
+        "abc123"
+      ],
+      "patches": [
+        {
+          "selector": "node:abc123",
+          "track": "behavioral",
+          "op": "replace",
+          "path": "/config/timeout",
+          "from": 30000,
+          "to": 60000,
+          "from_hash": "a1b2c3d4e5f6789012345678901234567890123456789012345678901234abcd",
+          "to_hash": "b2c3d4e5f6789012345678901234567890123456789012345678901234abcdef"
+        }
+      ],
+      "staged_at": "2024-01-15T10:30:00Z"
+    }
+  ],
+  "created_at": "2024-01-15T10:00:00Z",
+  "updated_at": "2024-01-15T10:30:00Z"
+}

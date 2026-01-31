@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://control-panel.local/schemas/keystone/AuthContext.schema.json",
+  "title": "AuthContext Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "spec_version",
+    "canon_version",
+    "record_type",
+    "ts_ms",
+    "trace",
+    "producer",
+    "actor",
+    "credential",
+    "grants"
+  ],
+  "properties": {
+    "spec_version": { "$ref": "Shared.schema.json#/$defs/SpecVersion" },
+    "canon_version": { "$ref": "Shared.schema.json#/$defs/CanonVersion" },
+    "record_type": { "const": "auth_context" },
+    "ts_ms": { "$ref": "Shared.schema.json#/$defs/IntMillis" },
+    "trace": { "$ref": "TraceContext.schema.json" },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["layer", "component"],
+      "properties": {
+        "layer": { "const": "cpo" },
+        "component": { "$ref": "Shared.schema.json#/$defs/Token" }
+      }
+    },
+    "actor": { "$ref": "Shared.schema.json#/$defs/Actor" },
+    "credential": { "$ref": "Shared.schema.json#/$defs/Credential" },
+    "grants": { "$ref": "Shared.schema.json#/$defs/StringSet" }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "validate_expect_issues_example",
+  "input": {
+    "id": "atom1",
+    "value": 1
+  },
+  "expect": {
+    "valid": false,
+    "issue_codes": [
+      "MISSING_REQUIRED_FIELD"
+    ],
+    "atoms_mentioned": [
+      "^atom1$"
+    ]
+  },
+  "meta": {
+    "note": "Illustrative example: atoms_mentioned are regex patterns matched against issue.atoms."
+  }
+}

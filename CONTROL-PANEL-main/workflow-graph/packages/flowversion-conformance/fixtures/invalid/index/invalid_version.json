@@ -1,0 +1,7 @@
+{
+  "_comment": "Invalid: version must be >= 1",
+  "_expected_error": "minimum",
+  "v": 0,
+  "base_checkpoint": null,
+  "entries": []
+}

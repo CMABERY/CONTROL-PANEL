@@ -1,0 +1,90 @@
+{
+  "name": "merge_delete_edit_conflict_on_node",
+  "base": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "start"
+      },
+      {
+        "id": "x",
+        "type": "task",
+        "config": {
+          "task_key": "x"
+        }
+      },
+      {
+        "id": "end",
+        "type": "end"
+      }
+    ],
+    "edges": [
+      {
+        "from": "start",
+        "to": "x"
+      },
+      {
+        "from": "x",
+        "to": "end"
+      }
+    ]
+  },
+  "left": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "start"
+      },
+      {
+        "id": "end",
+        "type": "end"
+      }
+    ],
+    "edges": [
+      {
+        "from": "start",
+        "to": "end"
+      }
+    ]
+  },
+  "right": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "start"
+      },
+      {
+        "id": "x",
+        "type": "task",
+        "config": {
+          "task_key": "x",
+          "timeout_s": 10
+        }
+      },
+      {
+        "id": "end",
+        "type": "end"
+      }
+    ],
+    "edges": [
+      {
+        "from": "start",
+        "to": "x"
+      },
+      {
+        "from": "x",
+        "to": "end"
+      }
+    ]
+  },
+  "expect": {
+    "conflict_count": 1,
+    "conflicts": [
+      {
+        "type": "delete_edit",
+        "severity": "error",
+        "selector_pattern": "^node:x$"
+      }
+    ]
+  }
+}

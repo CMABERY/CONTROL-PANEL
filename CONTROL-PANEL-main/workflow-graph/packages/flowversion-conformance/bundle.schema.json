@@ -1,0 +1,866 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://flowversion.dev/schemas/bundle.json",
+  "title": "Domain-Native VCS Conformance Schema Bundle",
+  "description": "JSON Schema definitions for kernel objects in the Domain-Native Version Control Kit",
+  "$defs": {
+    "CheckpointId": {
+      "type": "string",
+      "minLength": 7,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._:-]{7,128}$",
+      "description": "Content-addressed or generated checkpoint identifier"
+    },
+    "AtomId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "description": "Stable identifier for a domain atom (node, edge, field, etc.)"
+    },
+    "AtomSelector": {
+      "type": "string",
+      "pattern": "^(node|edge|field|region|path|blob):[^\\s]+$",
+      "description": "Selector string targeting atoms (e.g., node:abc123, field:abc123./config/timeout)"
+    },
+    "Timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp"
+    },
+    "Hash256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "256-bit hash as lowercase hex"
+    },
+    "UUID": {
+      "type": "string",
+      "format": "uuid",
+      "description": "UUID v4"
+    },
+    "Author": {
+      "type": "object",
+      "required": [
+        "user_id",
+        "display_name"
+      ],
+      "properties": {
+        "user_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "display_name": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "PatchOp": {
+      "type": "object",
+      "description": "A single staged change in the index (frozen intent)",
+      "required": [
+        "selector",
+        "op",
+        "path",
+        "from_hash",
+        "to_hash"
+      ],
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/AtomSelector"
+        },
+        "track": {
+          "type": "string",
+          "enum": [
+            "behavioral",
+            "presentation"
+          ],
+          "default": "behavioral"
+        },
+        "op": {
+          "type": "string",
+          "enum": [
+            "add",
+            "remove",
+            "replace",
+            "move",
+            "copy"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "description": "JSON Pointer or logical path within the atom"
+        },
+        "from": {
+          "description": "Previous value (omit for add)"
+        },
+        "to": {
+          "description": "New value (omit for remove)"
+        },
+        "from_hash": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Hash256"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Hash of canonical 'from' value (null for add)"
+        },
+        "to_hash": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Hash256"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Hash of canonical 'to' value (null for remove)"
+        }
+      },
+      "additionalProperties": false
+    },
+    "StagedEntry": {
+      "type": "object",
+      "description": "Entry in the staging index with frozen expansion",
+      "required": [
+        "selector",
+        "expanded_atoms",
+        "patches",
+        "staged_at"
+      ],
+      "properties": {
+        "selector": {
+          "type": "string"
+        },
+        "expanded_atoms": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AtomId"
+          }
+        },
+        "patches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PatchOp"
+          }
+        },
+        "staged_at": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Index": {
+      "type": "object",
+      "description": "Staging area (index overlay anchored to a base checkpoint)",
+      "required": [
+        "v",
+        "base_checkpoint",
+        "entries"
+      ],
+      "properties": {
+        "v": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Schema version"
+        },
+        "base_checkpoint": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/CheckpointId"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Checkpoint this index is anchored to (null for initial)"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/StagedEntry"
+          }
+        },
+        "created_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "TreeRef": {
+      "type": "object",
+      "required": [
+        "state_hash"
+      ],
+      "properties": {
+        "state_hash": {
+          "$ref": "#/$defs/Hash256"
+        },
+        "behavioral_hash": {
+          "$ref": "#/$defs/Hash256"
+        },
+        "presentation_hash": {
+          "$ref": "#/$defs/Hash256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Checkpoint": {
+      "type": "object",
+      "description": "Immutable, addressable state snapshot with metadata",
+      "required": [
+        "v",
+        "checkpoint_id",
+        "parents",
+        "author",
+        "message",
+        "tree",
+        "created_at"
+      ],
+      "properties": {
+        "v": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "checkpoint_id": {
+          "$ref": "#/$defs/CheckpointId"
+        },
+        "parents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CheckpointId"
+          },
+          "description": "Parent checkpoint IDs (empty for root)"
+        },
+        "author": {
+          "$ref": "#/$defs/Author"
+        },
+        "committer": {
+          "$ref": "#/$defs/Author"
+        },
+        "message": {
+          "type": "string"
+        },
+        "tree": {
+          "$ref": "#/$defs/TreeRef"
+        },
+        "client_nonce": {
+          "type": "string",
+          "description": "Idempotency key for deduplication"
+        },
+        "created_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "signatures": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "alg",
+              "public_key_id",
+              "sig"
+            ],
+            "properties": {
+              "alg": {
+                "type": "string",
+                "enum": [
+                  "ed25519",
+                  "ecdsa-p256"
+                ]
+              },
+              "public_key_id": {
+                "type": "string"
+              },
+              "sig": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "ConflictSeverity": {
+      "type": "string",
+      "enum": [
+        "error",
+        "warning"
+      ],
+      "description": "error = blocking, warning = auto-resolvable with preference"
+    },
+    "ResolutionAction": {
+      "type": "string",
+      "enum": [
+        "take_ours",
+        "take_theirs",
+        "take_base",
+        "manual_edit",
+        "auto_merged"
+      ]
+    },
+    "Conflict": {
+      "type": "object",
+      "description": "A merge conflict requiring resolution",
+      "required": [
+        "conflict_id",
+        "type",
+        "selector",
+        "severity",
+        "allowed_resolutions"
+      ],
+      "properties": {
+        "conflict_id": {
+          "$ref": "#/$defs/UUID"
+        },
+        "type": {
+          "type": "string",
+          "description": "Conflict type (e.g., edit_edit, delete_modify, structural)"
+        },
+        "selector": {
+          "$ref": "#/$defs/AtomSelector"
+        },
+        "track": {
+          "type": "string",
+          "enum": [
+            "behavioral",
+            "presentation"
+          ]
+        },
+        "severity": {
+          "$ref": "#/$defs/ConflictSeverity"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "base": {
+          "description": "Value in base"
+        },
+        "ours": {
+          "description": "Value in ours"
+        },
+        "theirs": {
+          "description": "Value in theirs"
+        },
+        "allowed_resolutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResolutionAction"
+          },
+          "minItems": 1
+        },
+        "default_resolution": {
+          "$ref": "#/$defs/ResolutionAction",
+          "description": "Required for severity=warning"
+        },
+        "impact_hints": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "severity": {
+                "const": "warning"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "default_resolution"
+            ]
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "Resolution": {
+      "type": "object",
+      "required": [
+        "conflict_id",
+        "action",
+        "resolved_at"
+      ],
+      "properties": {
+        "conflict_id": {
+          "$ref": "#/$defs/UUID"
+        },
+        "action": {
+          "$ref": "#/$defs/ResolutionAction"
+        },
+        "resolved_by": {
+          "$ref": "#/$defs/Author"
+        },
+        "resolved_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "manual_value": {
+          "description": "Required if action=manual_edit"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ReconcileSessionStatus": {
+      "type": "string",
+      "enum": [
+        "in_progress",
+        "awaiting_validation",
+        "validation_failed",
+        "finalized",
+        "aborted"
+      ]
+    },
+    "ReconcileSession": {
+      "type": "object",
+      "description": "Persistent state for an in-progress merge/rebase/cherry-pick",
+      "required": [
+        "v",
+        "session_id",
+        "type",
+        "base",
+        "ours",
+        "theirs",
+        "status",
+        "created_at"
+      ],
+      "properties": {
+        "v": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "session_id": {
+          "$ref": "#/$defs/UUID"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "merge",
+            "rebase",
+            "cherry_pick"
+          ]
+        },
+        "base": {
+          "$ref": "#/$defs/CheckpointId"
+        },
+        "ours": {
+          "$ref": "#/$defs/CheckpointId"
+        },
+        "theirs": {
+          "$ref": "#/$defs/CheckpointId"
+        },
+        "status": {
+          "$ref": "#/$defs/ReconcileSessionStatus"
+        },
+        "tentative_state_hash": {
+          "$ref": "#/$defs/Hash256"
+        },
+        "conflicts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Conflict"
+          }
+        },
+        "resolutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Resolution"
+          }
+        },
+        "validation_result": {
+          "$ref": "#/$defs/ValidationResult"
+        },
+        "created_at": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ReflogAction": {
+      "type": "string",
+      "enum": [
+        "checkpoint",
+        "merge",
+        "reset",
+        "rebase",
+        "branch_create",
+        "branch_delete",
+        "checkout",
+        "restore"
+      ]
+    },
+    "ReflogEntry": {
+      "type": "object",
+      "description": "Recovery trail entry for ref changes",
+      "required": [
+        "v",
+        "entry_id",
+        "ref",
+        "old_value",
+        "new_value",
+        "action",
+        "actor",
+        "timestamp"
+      ],
+      "properties": {
+        "v": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "entry_id": {
+          "$ref": "#/$defs/UUID"
+        },
+        "ref": {
+          "type": "string",
+          "description": "Ref name (e.g., refs/heads/main, HEAD)"
+        },
+        "old_value": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/CheckpointId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "new_value": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/CheckpointId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "action": {
+          "$ref": "#/$defs/ReflogAction"
+        },
+        "message": {
+          "type": "string"
+        },
+        "actor": {
+          "$ref": "#/$defs/Author"
+        },
+        "timestamp": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "recovery_hint": {
+          "type": "string",
+          "description": "Human-readable hint for how to recover"
+        },
+        "pre_action_snapshot": {
+          "$ref": "#/$defs/Hash256",
+          "description": "Optional snapshot hash for destructive actions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ValidationSeverity": {
+      "type": "string",
+      "enum": [
+        "error",
+        "warning",
+        "info"
+      ]
+    },
+    "ValidationIssue": {
+      "type": "object",
+      "description": "A validation violation with precise localization",
+      "required": [
+        "issue_id",
+        "code",
+        "message",
+        "severity",
+        "atoms"
+      ],
+      "properties": {
+        "issue_id": {
+          "$ref": "#/$defs/UUID"
+        },
+        "code": {
+          "type": "string",
+          "description": "Machine-readable error code"
+        },
+        "message": {
+          "type": "string"
+        },
+        "severity": {
+          "$ref": "#/$defs/ValidationSeverity"
+        },
+        "atoms": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AtomId"
+          },
+          "minItems": 1,
+          "description": "Atoms this issue localizes to"
+        },
+        "anchors": {
+          "type": "object",
+          "description": "Domain-specific anchor data for UI highlighting"
+        },
+        "region_hint": {
+          "type": "object",
+          "description": "Optional spatial/structural region hint"
+        },
+        "suggested_fix": {
+          "type": "object",
+          "description": "Optional executable fix action"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ValidationResult": {
+      "type": "object",
+      "description": "Result of validation pass",
+      "required": [
+        "v",
+        "valid",
+        "issues"
+      ],
+      "properties": {
+        "v": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "valid": {
+          "type": "boolean"
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ValidationIssue"
+          }
+        },
+        "state_hash": {
+          "$ref": "#/$defs/Hash256"
+        },
+        "validated_at": {
+          "$ref": "#/$defs/Timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "DiffFixture": {
+      "type": "object",
+      "description": "Fixture input for adapter.diff(from, to) determinism tests",
+      "required": [
+        "from",
+        "to"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "from": {
+          "description": "Domain atom/state BEFORE"
+        },
+        "to": {
+          "description": "Domain atom/state AFTER"
+        },
+        "options": {
+          "type": "object",
+          "description": "Optional diff options (domain-specific)",
+          "additionalProperties": true
+        },
+        "meta": {
+          "type": "object",
+          "description": "Arbitrary metadata (ignored by harness)",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "MergeFixture": {
+      "type": "object",
+      "description": "Fixture input for adapter.merge(base, left, right) determinism tests",
+      "required": [
+        "base",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "base": {
+          "description": "Base atom/state"
+        },
+        "left": {
+          "description": "Left (ours) atom/state"
+        },
+        "right": {
+          "description": "Right (theirs) atom/state"
+        },
+        "options": {
+          "type": "object",
+          "description": "Optional merge options (domain-specific)",
+          "additionalProperties": true
+        },
+        "meta": {
+          "type": "object",
+          "description": "Arbitrary metadata (ignored by harness)",
+          "additionalProperties": true
+        },
+        "expect": {
+          "$ref": "#/$defs/MergeExpect"
+        }
+      },
+      "additionalProperties": true
+    },
+    "ValidateFixture": {
+      "type": "object",
+      "description": "Fixture input for adapter.validate(input) determinism tests",
+      "required": [
+        "input"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "input": {
+          "description": "Atom/state to validate"
+        },
+        "options": {
+          "type": "object",
+          "description": "Optional validation options (domain-specific)",
+          "additionalProperties": true
+        },
+        "meta": {
+          "type": "object",
+          "description": "Arbitrary metadata (ignored by harness)",
+          "additionalProperties": true
+        },
+        "expect": {
+          "$ref": "#/$defs/ValidateExpect"
+        }
+      },
+      "additionalProperties": true
+    },
+    "ConflictExpect": {
+      "type": "object",
+      "description": "Expectation matcher for a merge conflict in adapter.merge output (used by conformance harness)",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Exact conflict type expected"
+        },
+        "type_pattern": {
+          "type": "string",
+          "description": "Regex pattern to match conflict.type"
+        },
+        "severity": {
+          "$ref": "#/$defs/ConflictSeverity"
+        },
+        "selector": {
+          "$ref": "#/$defs/AtomSelector",
+          "description": "Exact selector string expected"
+        },
+        "selector_pattern": {
+          "type": "string",
+          "description": "Regex pattern to match conflict.selector"
+        }
+      },
+      "additionalProperties": true
+    },
+    "MergeExpect": {
+      "type": "object",
+      "description": "Semantic expectations for adapter.merge output (optional). Determinism tests still apply even without expectations.",
+      "properties": {
+        "conflict_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Exact expected number of conflicts"
+        },
+        "conflict_count_min": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Minimum expected number of conflicts"
+        },
+        "conflict_count_max": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Maximum expected number of conflicts"
+        },
+        "no_unexpected_conflicts": {
+          "type": "boolean",
+          "description": "If true, every actual conflict must match at least one expectation pattern"
+        },
+        "conflicts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ConflictExpect"
+          },
+          "description": "List of expected conflicts. Each expected entry must match at least one actual conflict."
+        }
+      },
+      "additionalProperties": true
+    },
+    "ValidateExpect": {
+      "type": "object",
+      "description": "Semantic expectations for adapter.validate output (optional). Output must still conform to ValidationResult schema.",
+      "properties": {
+        "valid": {
+          "type": "boolean",
+          "description": "Expected ValidationResult.valid"
+        },
+        "issue_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Exact expected number of issues"
+        },
+        "issue_count_min": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Minimum expected number of issues"
+        },
+        "issue_count_max": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Maximum expected number of issues"
+        },
+        "issue_codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Expected issue codes. By default treated as a subset requirement."
+        },
+        "issue_codes_exact": {
+          "type": "boolean",
+          "description": "If true, issue_codes must match the set of codes exactly (order-insensitive)"
+        },
+        "atoms_mentioned": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Regex patterns that must match at least one atom id mentioned by any issue.atoms. Use ^...$ for exact matches."
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "_comment": "Invalid: missing required 'entries' field",
+  "_expected_error": "required property 'entries'",
+  "v": 1,
+  "base_checkpoint": "cpt_01HV3X5Y6Z7890ABCDEF"
+}

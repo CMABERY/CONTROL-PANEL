@@ -1,0 +1,30 @@
+{
+  "v": 1,
+  "base_checkpoint": null,
+  "entries": [
+    {
+      "selector": "node:*",
+      "expanded_atoms": ["node-001", "node-002", "node-003"],
+      "patches": [
+        {
+          "selector": "node:node-001",
+          "op": "add",
+          "path": "/",
+          "to": {"id": "node-001", "type": "http_request", "config": {}},
+          "from_hash": null,
+          "to_hash": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
+        },
+        {
+          "selector": "node:node-002",
+          "op": "add",
+          "path": "/",
+          "to": {"id": "node-002", "type": "transform", "config": {}},
+          "from_hash": null,
+          "to_hash": "234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1"
+        }
+      ],
+      "staged_at": "2024-01-15T09:00:00Z"
+    }
+  ],
+  "created_at": "2024-01-15T09:00:00Z"
+}

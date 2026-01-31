@@ -1,0 +1,72 @@
+{
+  "_meta": {
+    "spec_version": "1.0.0",
+    "canon_version": "1",
+    "generated_at": "2026-01-31T00:00:00Z",
+    "generator": "canonical-closeout (phase lock)"
+  },
+  "vectors": [
+    {
+      "name": "valid.root",
+      "input": {
+        "trace_id": "0123456789abcdef0123456789abcdef",
+        "span_id": "1111111111111111",
+        "span_kind": "root"
+      },
+      "canonical_json": "{\"span_id\":\"1111111111111111\",\"span_kind\":\"root\",\"trace_id\":\"0123456789abcdef0123456789abcdef\"}",
+      "sha256": "f9198ba7de2e8a358e533e55758bba87ce696a194d5c9cca41464922e4f5d51d"
+    },
+    {
+      "name": "valid.child",
+      "input": {
+        "trace_id": "0123456789abcdef0123456789abcdef",
+        "span_id": "3333333333333333",
+        "span_kind": "child",
+        "parent_span_id": "1111111111111111"
+      },
+      "canonical_json": "{\"parent_span_id\":\"1111111111111111\",\"span_id\":\"3333333333333333\",\"span_kind\":\"child\",\"trace_id\":\"0123456789abcdef0123456789abcdef\"}",
+      "sha256": "315057500c4db6f3d43b3e842a022f81087c1d552ca8c04732ac4600fb395084"
+    },
+    {
+      "name": "invalid.child_missing_parent_span_id",
+      "input": {
+        "trace_id": "0123456789abcdef0123456789abcdef",
+        "span_id": "3333333333333333",
+        "span_kind": "child"
+      },
+      "canonical_json": null,
+      "sha256": null
+    },
+    {
+      "name": "invalid.root_with_parent_span_id",
+      "input": {
+        "trace_id": "0123456789abcdef0123456789abcdef",
+        "span_id": "1111111111111111",
+        "span_kind": "root",
+        "parent_span_id": "3333333333333333"
+      },
+      "canonical_json": null,
+      "sha256": null
+    },
+    {
+      "name": "invalid.trace_id_all_zero",
+      "input": {
+        "trace_id": "00000000000000000000000000000000",
+        "span_id": "1111111111111111",
+        "span_kind": "root"
+      },
+      "canonical_json": null,
+      "sha256": null
+    },
+    {
+      "name": "invalid.span_id_all_zero",
+      "input": {
+        "trace_id": "0123456789abcdef0123456789abcdef",
+        "span_id": "0000000000000000",
+        "span_kind": "root"
+      },
+      "canonical_json": null,
+      "sha256": null
+    }
+  ]
+}
