@@ -22,6 +22,7 @@ If it's green, your adapter upholds the physics. If it's red, it doesn't.
 
 - `packages/flowversion-conformance/` — the conformance harness (published package shape)
 - `packages/workflow-graph-adapter/` — reference adapter + fixtures + docs
+- `packages/keystone-gate-runtime/` — Keystone Gate envelope runtime + proofs bundle (LOCKED)
 
 ## Kit docs included
 

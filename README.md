@@ -2,6 +2,16 @@
 
 Unified governance and version control repository implementing **governance through physics, not policy**.
 
+**Repository status:** COMPLETE and canonically locked.
+
+This repository is a **static proof bundle**:
+- Contracts are locked (closed-world).
+- Evidence is content-addressed and replayable.
+- No residual design surface remains without an explicit, versioned canon revision.
+
+Canonical closeout: `CANONICAL_CLOSEOUT.md`  
+Keystone integration contract: `INTEGRATION_MANUAL.md`
+
 ## Projects
 
 ### CPO Governance Kernel (`/cpo`)
@@ -48,6 +58,29 @@ A domain-native version control kit that:
 - Deterministic canonicalization (integer-only for portability)
 - Golden vectors with SHA-256 hashes
 - CLI: `npx flowversion-conformance test`
+
+
+### Keystone Gate Envelope System (`/workflow-graph/packages/keystone-gate-runtime`)
+
+A contract-locked envelope + governance + replay system spanning:
+
+- **Phase 1** canonical envelope schemas + goldens (Draft 2020-12, RFC 8785/JCS)
+- **Phase 2** integration tests and failure taxonomy
+- **Phase 3** operational wiring (FlowVersion envelope ops + CPO `commit_action`)
+- **Phase 4** cross-layer conformance + adapter certification
+- **Phase 5** replay plumbing (forensic / constrained / invariant)
+- **Phase 6** replay UI & controlled expansion specification (artifact-only)
+
+**Canonical docs:**
+- `INTEGRATION_MANUAL.md`
+- `docs/keystone/CANONICALIZATION_RULES.md`
+- `docs/keystone/PHASE6_REPLAY_UI_SPEC.md`
+
+**Run tests:**
+```bash
+cd workflow-graph
+npm -w keystone-gate-runtime test
+```
 
 ### Workflow Graph Reference (`/workflow-graph/packages/workflow-graph-adapter`)
 

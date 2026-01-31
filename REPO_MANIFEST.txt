@@ -1,18 +1,19 @@
 # GOVERNANCE REPOSITORY - CANONICAL MANIFEST
-# Generated: 2026-01-31T00:10:00Z
+# Generated: 2026-01-31T00:00:00Z
 # Source: governance-main (final remediated)
 # ===========================================
 
 ## Summary
 
-Files: 115
+Files: 178
   SQL:        27
   Shell:       4
-  JSON:       43
-  Markdown:   24
-  JavaScript: 13
+  JSON:       63
+  Markdown:   36
+  JavaScript: 41
+  TypeScript: 1
   YAML:        1
-  Text:        1
+  Text:        3
   Other:       2
 
 ## Structure
@@ -163,3 +164,25 @@ FlowVersion goldens.json locations: 1 (no duplication)
 | P7 | complete | 3 |
 
 Total evidence links: 28 (all resolve)
+
+
+7. Keystone Gate Envelope System (Phases 1–6) — COMPLETE (LOCKED)
+
+Canonical location:
+- workflow-graph/packages/keystone-gate-runtime/
+
+Authority surfaces:
+- schemas/: Draft 2020-12 schema pack (Shared + TraceContext + 4 record schemas)
+- goldens/: record-level goldens + end-to-end + conformance goldens
+- src/: contract-locked runtime (FlowVersion envelope ops + CPO gate + replay engines)
+- certifications/: adapter certification + revocation templates
+- test/: Phase 2/4/5 normative suites (node --test)
+- PHASE5_REPLAY.md: replay plumbing specification (package-local)
+- docs/keystone/: Phase 6 UI spec + canonicalization rules
+- INTEGRATION_MANUAL.md: normative integration contract (repo root)
+- CANONICAL_CLOSEOUT.md: authoritative progress compilation (repo root)
+
+Deprecation notes (archival; not removed):
+- workflow-graph/packages/keystone-gate-runtime/src/replay-index.js and src/replay-*.js
+  are legacy wrapper implementations superseded by canonical implementations under src/replay/.
+  They are retained for historical continuity; tests and docs point to src/replay/* as canonical.

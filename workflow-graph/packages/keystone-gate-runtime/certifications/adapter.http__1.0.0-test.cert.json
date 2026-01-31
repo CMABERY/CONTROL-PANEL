@@ -1,0 +1,41 @@
+{
+  "_meta": {
+    "spec_version": "1.0.0",
+    "canon_version": "1",
+    "generated_at_ms": 1769817600000,
+    "generator": "phase4 certification runner (contract-locked)"
+  },
+  "certification_sha256": "60e85a3c146eacee1a4d2db0f9c9aee6d6f52e154c5528cc156158b58daef3a9",
+  "certification_canonical_json": "{\"adapter_id\":\"adapter.http\",\"artifact_kind\":\"adapter_certification\",\"canon_version\":\"1\",\"certified_at_ms\":1769817600000,\"certified_version\":\"1.0.0-test\",\"conformance_results_sha256\":\"0ba39dc1c657769fb52c1d6e5b19a9fc97f196773a8db9ee59e75f8a0749b23f\",\"spec_version\":\"1.0.0\",\"status\":\"certified\"}",
+  "certification": {
+    "artifact_kind": "adapter_certification",
+    "adapter_id": "adapter.http",
+    "certified_version": "1.0.0-test",
+    "spec_version": "1.0.0",
+    "canon_version": "1",
+    "certified_at_ms": 1769817600000,
+    "conformance_results_sha256": "0ba39dc1c657769fb52c1d6e5b19a9fc97f196773a8db9ee59e75f8a0749b23f",
+    "status": "certified"
+  },
+  "conformance_results_sha256": "0ba39dc1c657769fb52c1d6e5b19a9fc97f196773a8db9ee59e75f8a0749b23f",
+  "conformance_results_canonical_json": "{\"adapter_id\":\"adapter.http\",\"adapter_version\":\"1.0.0-test\",\"artifact_kind\":\"adapter_conformance_results\",\"canon_version\":\"1\",\"evidence_envelope_hashes\":{\"8504b310391f57e2d93a0ac2e540bb7da4dca41a020d7e09c71aedbd00f10620\":true},\"executed_at_ms\":1769817600000,\"spec_version\":\"1.0.0\",\"suite_id\":\"phase4_conformance_v1\",\"tests\":{\"CT-ADAPTER-001.schema_valid\":true,\"CT-ADAPTER-002.trace_id_present\":true,\"CT-ADAPTER-003.prereq_hashes_present\":true,\"CT-ADAPTER-004.correct_declared_hash\":true,\"CT-ADAPTER-005.cpo_accepts\":true}}",
+  "conformance_results": {
+    "artifact_kind": "adapter_conformance_results",
+    "suite_id": "phase4_conformance_v1",
+    "adapter_id": "adapter.http",
+    "adapter_version": "1.0.0-test",
+    "spec_version": "1.0.0",
+    "canon_version": "1",
+    "executed_at_ms": 1769817600000,
+    "tests": {
+      "CT-ADAPTER-001.schema_valid": true,
+      "CT-ADAPTER-002.trace_id_present": true,
+      "CT-ADAPTER-003.prereq_hashes_present": true,
+      "CT-ADAPTER-004.correct_declared_hash": true,
+      "CT-ADAPTER-005.cpo_accepts": true
+    },
+    "evidence_envelope_hashes": {
+      "8504b310391f57e2d93a0ac2e540bb7da4dca41a020d7e09c71aedbd00f10620": true
+    }
+  }
+}

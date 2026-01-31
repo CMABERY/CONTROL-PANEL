@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://control-panel.local/schemas/keystone/ModelCallRecord.schema.json",
+  "title": "ModelCallRecord Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "spec_version",
+    "canon_version",
+    "record_type",
+    "started_at_ms",
+    "ended_at_ms",
+    "trace",
+    "producer",
+    "auth_context_envelope_sha256",
+    "policy_decision_envelope_sha256",
+    "model",
+    "request",
+    "response",
+    "outcome"
+  ],
+  "properties": {
+    "spec_version": { "$ref": "Shared.schema.json#/$defs/SpecVersion" },
+    "canon_version": { "$ref": "Shared.schema.json#/$defs/CanonVersion" },
+    "record_type": { "const": "model_call" },
+    "started_at_ms": { "$ref": "Shared.schema.json#/$defs/IntMillis" },
+    "ended_at_ms": { "$ref": "Shared.schema.json#/$defs/IntMillis" },
+    "trace": { "$ref": "TraceContext.schema.json" },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["layer", "component"],
+      "properties": {
+        "layer": { "const": "flow" },
+        "component": { "$ref": "Shared.schema.json#/$defs/Token" }
+      }
+    },
+    "auth_context_envelope_sha256": { "$ref": "Shared.schema.json#/$defs/Hash256" },
+    "policy_decision_envelope_sha256": { "$ref": "Shared.schema.json#/$defs/Hash256" },
+    "model": { "$ref": "Shared.schema.json#/$defs/ModelRef" },
+    "request": { "$ref": "Shared.schema.json#/$defs/BlobRef" },
+    "response": { "$ref": "Shared.schema.json#/$defs/BlobRef" },
+    "outcome": { "$ref": "Shared.schema.json#/$defs/Outcome" },
+    "usage": { "$ref": "Shared.schema.json#/$defs/Usage" }
+  }
+}

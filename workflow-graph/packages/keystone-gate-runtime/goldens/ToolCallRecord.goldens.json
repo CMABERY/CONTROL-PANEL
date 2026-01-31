@@ -1,0 +1,257 @@
+{
+  "_meta": {
+    "spec_version": "1.0.0",
+    "canon_version": "1",
+    "generated_at": "2026-01-31T00:00:00Z",
+    "generator": "canonical-closeout (phase lock)"
+  },
+  "vectors": [
+    {
+      "name": "valid.ok",
+      "input": {
+        "spec_version": "1.0.0",
+        "canon_version": "1",
+        "record_type": "tool_call",
+        "started_at_ms": 1769817600300,
+        "ended_at_ms": 1769817600400,
+        "trace": {
+          "trace_id": "0123456789abcdef0123456789abcdef",
+          "span_id": "5555555555555555",
+          "span_kind": "child",
+          "parent_span_id": "4444444444444444"
+        },
+        "producer": {
+          "layer": "adapter",
+          "component": "adapter.http"
+        },
+        "auth_context_envelope_sha256": "02711ccc70dde0e90587d5174c8b6e788bbeb080530765a1b641754679ca1702",
+        "policy_decision_envelope_sha256": "bbea5793c8983e4ecb6da304d200ac3af93cca355f07f03f465ecbf0310a1ef9",
+        "tool": {
+          "adapter_id": "adapter.http",
+          "tool_name": "http.get"
+        },
+        "request": {
+          "content_type": "application/json",
+          "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "size_bytes": 111
+        },
+        "response": {
+          "content_type": "application/json",
+          "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "size_bytes": 222
+        },
+        "outcome": {
+          "status": "ok"
+        }
+      },
+      "canonical_json": "{\"auth_context_envelope_sha256\":\"02711ccc70dde0e90587d5174c8b6e788bbeb080530765a1b641754679ca1702\",\"canon_version\":\"1\",\"ended_at_ms\":1769817600400,\"outcome\":{\"status\":\"ok\"},\"policy_decision_envelope_sha256\":\"bbea5793c8983e4ecb6da304d200ac3af93cca355f07f03f465ecbf0310a1ef9\",\"producer\":{\"component\":\"adapter.http\",\"layer\":\"adapter\"},\"record_type\":\"tool_call\",\"request\":{\"content_type\":\"application/json\",\"sha256\":\"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\",\"size_bytes\":111},\"response\":{\"content_type\":\"application/json\",\"sha256\":\"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\",\"size_bytes\":222},\"spec_version\":\"1.0.0\",\"started_at_ms\":1769817600300,\"tool\":{\"adapter_id\":\"adapter.http\",\"tool_name\":\"http.get\"},\"trace\":{\"parent_span_id\":\"4444444444444444\",\"span_id\":\"5555555555555555\",\"span_kind\":\"child\",\"trace_id\":\"0123456789abcdef0123456789abcdef\"}}",
+      "sha256": "972957dc3657c2fc6c25745579154e2141c97cf81306a592096d64dcb1eac2df"
+    },
+    {
+      "name": "invalid.missing_auth_context_hash",
+      "input": {
+        "spec_version": "1.0.0",
+        "canon_version": "1",
+        "record_type": "tool_call",
+        "started_at_ms": 1769817600300,
+        "ended_at_ms": 1769817600400,
+        "trace": {
+          "trace_id": "0123456789abcdef0123456789abcdef",
+          "span_id": "5555555555555555",
+          "span_kind": "child",
+          "parent_span_id": "4444444444444444"
+        },
+        "producer": {
+          "layer": "adapter",
+          "component": "adapter.http"
+        },
+        "policy_decision_envelope_sha256": "bbea5793c8983e4ecb6da304d200ac3af93cca355f07f03f465ecbf0310a1ef9",
+        "tool": {
+          "adapter_id": "adapter.http",
+          "tool_name": "http.get"
+        },
+        "request": {
+          "content_type": "application/json",
+          "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "size_bytes": 111
+        },
+        "response": {
+          "content_type": "application/json",
+          "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "size_bytes": 222
+        },
+        "outcome": {
+          "status": "ok"
+        }
+      },
+      "canonical_json": null,
+      "sha256": null
+    },
+    {
+      "name": "invalid.ended_at_string",
+      "input": {
+        "spec_version": "1.0.0",
+        "canon_version": "1",
+        "record_type": "tool_call",
+        "started_at_ms": 1769817600300,
+        "ended_at_ms": "1769817600400",
+        "trace": {
+          "trace_id": "0123456789abcdef0123456789abcdef",
+          "span_id": "5555555555555555",
+          "span_kind": "child",
+          "parent_span_id": "4444444444444444"
+        },
+        "producer": {
+          "layer": "adapter",
+          "component": "adapter.http"
+        },
+        "auth_context_envelope_sha256": "02711ccc70dde0e90587d5174c8b6e788bbeb080530765a1b641754679ca1702",
+        "policy_decision_envelope_sha256": "bbea5793c8983e4ecb6da304d200ac3af93cca355f07f03f465ecbf0310a1ef9",
+        "tool": {
+          "adapter_id": "adapter.http",
+          "tool_name": "http.get"
+        },
+        "request": {
+          "content_type": "application/json",
+          "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "size_bytes": 111
+        },
+        "response": {
+          "content_type": "application/json",
+          "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "size_bytes": 222
+        },
+        "outcome": {
+          "status": "ok"
+        }
+      },
+      "canonical_json": null,
+      "sha256": null
+    },
+    {
+      "name": "invalid.tool_name_bad_token",
+      "input": {
+        "spec_version": "1.0.0",
+        "canon_version": "1",
+        "record_type": "tool_call",
+        "started_at_ms": 1769817600300,
+        "ended_at_ms": 1769817600400,
+        "trace": {
+          "trace_id": "0123456789abcdef0123456789abcdef",
+          "span_id": "5555555555555555",
+          "span_kind": "child",
+          "parent_span_id": "4444444444444444"
+        },
+        "producer": {
+          "layer": "adapter",
+          "component": "adapter.http"
+        },
+        "auth_context_envelope_sha256": "02711ccc70dde0e90587d5174c8b6e788bbeb080530765a1b641754679ca1702",
+        "policy_decision_envelope_sha256": "bbea5793c8983e4ecb6da304d200ac3af93cca355f07f03f465ecbf0310a1ef9",
+        "tool": {
+          "adapter_id": "adapter.http",
+          "tool_name": "HTTP GET"
+        },
+        "request": {
+          "content_type": "application/json",
+          "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "size_bytes": 111
+        },
+        "response": {
+          "content_type": "application/json",
+          "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "size_bytes": 222
+        },
+        "outcome": {
+          "status": "ok"
+        }
+      },
+      "canonical_json": null,
+      "sha256": null
+    },
+    {
+      "name": "invalid.trace_id_missing",
+      "input": {
+        "spec_version": "1.0.0",
+        "canon_version": "1",
+        "record_type": "tool_call",
+        "started_at_ms": 1769817600300,
+        "ended_at_ms": 1769817600400,
+        "trace": {
+          "span_id": "5555555555555555",
+          "span_kind": "child",
+          "parent_span_id": "4444444444444444"
+        },
+        "producer": {
+          "layer": "adapter",
+          "component": "adapter.http"
+        },
+        "auth_context_envelope_sha256": "02711ccc70dde0e90587d5174c8b6e788bbeb080530765a1b641754679ca1702",
+        "policy_decision_envelope_sha256": "bbea5793c8983e4ecb6da304d200ac3af93cca355f07f03f465ecbf0310a1ef9",
+        "tool": {
+          "adapter_id": "adapter.http",
+          "tool_name": "http.get"
+        },
+        "request": {
+          "content_type": "application/json",
+          "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "size_bytes": 111
+        },
+        "response": {
+          "content_type": "application/json",
+          "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "size_bytes": 222
+        },
+        "outcome": {
+          "status": "ok"
+        }
+      },
+      "canonical_json": null,
+      "sha256": null
+    },
+    {
+      "name": "invalid.unknown_field",
+      "input": {
+        "spec_version": "1.0.0",
+        "canon_version": "1",
+        "record_type": "tool_call",
+        "started_at_ms": 1769817600300,
+        "ended_at_ms": 1769817600400,
+        "trace": {
+          "trace_id": "0123456789abcdef0123456789abcdef",
+          "span_id": "5555555555555555",
+          "span_kind": "child",
+          "parent_span_id": "4444444444444444"
+        },
+        "producer": {
+          "layer": "adapter",
+          "component": "adapter.http"
+        },
+        "auth_context_envelope_sha256": "02711ccc70dde0e90587d5174c8b6e788bbeb080530765a1b641754679ca1702",
+        "policy_decision_envelope_sha256": "bbea5793c8983e4ecb6da304d200ac3af93cca355f07f03f465ecbf0310a1ef9",
+        "tool": {
+          "adapter_id": "adapter.http",
+          "tool_name": "http.get"
+        },
+        "request": {
+          "content_type": "application/json",
+          "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "size_bytes": 111
+        },
+        "response": {
+          "content_type": "application/json",
+          "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "size_bytes": 222
+        },
+        "outcome": {
+          "status": "ok"
+        },
+        "unexpected": {
+          "k": true
+        }
+      },
+      "canonical_json": null,
+      "sha256": null
+    }
+  ]
+}

@@ -12,6 +12,7 @@ The repository is one of the “hard-physics” building blocks for **Agarthic I
 ### What it is
 - A **CPO Governance Kernel**: a Postgres-backed governance subsystem that enforces “single write aperture”, fail-closed gates, time-bounded exceptions, drift as ledger artifacts, and change control.
 - A **FlowVersion conformance toolkit**: a Node-based conformance package (schema + goldens + tests) intended to keep contracts deterministic and non-duplicated.
+- A **Keystone Gate envelope system**: canonical envelope schemas + operational gate wiring + conformance + replay (Phases 1–6) under `workflow-graph/packages/keystone-gate-runtime/`.
 - A **machine-checkable evidence surface**:
   - `cpo/STATUS.json` = phase status + evidence links
   - `AUDIT_STAMP.json` = audit summary + authority hashes + verification commands
@@ -31,7 +32,7 @@ At a high level (from the canonical manifest):
   - `AUDIT_STAMP.json` — audit + authority hashes
   - `REPO_MANIFEST.txt` — canonical structure
   - `cpo/` — CPO Governance Kernel (SQL + scripts + docs)
-  - `workflow-graph/` — FlowVersion + reference domain adapter
+  - `workflow-graph/` — FlowVersion conformance + Keystone Gate runtime + reference domain adapter
 
 Key “authority files” (treat these as load-bearing):
 - `cpo/STATUS.json` — canonical phase status authority  
@@ -255,3 +256,21 @@ This repository contributes strongest to:
 - `cpo/STATUS.json`
 - `AUDIT_STAMP.json`
 - `workflow-graph/packages/flowversion-conformance/goldens.json`
+
+
+---
+
+## Keystone Gate quickstart (LOCKED)
+
+Authoritative docs:
+
+- `INTEGRATION_MANUAL.md`
+- `docs/keystone/CANONICALIZATION_RULES.md`
+- `docs/keystone/PHASE6_REPLAY_UI_SPEC.md`
+
+Run Keystone Gate runtime tests:
+
+```sh
+cd workflow-graph
+npm -w keystone-gate-runtime test
+```

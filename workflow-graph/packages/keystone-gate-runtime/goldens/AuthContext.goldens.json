@@ -1,0 +1,212 @@
+{
+  "_meta": {
+    "spec_version": "1.0.0",
+    "canon_version": "1",
+    "generated_at": "2026-01-31T00:00:00Z",
+    "generator": "canonical-closeout (phase lock)"
+  },
+  "vectors": [
+    {
+      "name": "valid.basic",
+      "input": {
+        "spec_version": "1.0.0",
+        "canon_version": "1",
+        "record_type": "auth_context",
+        "ts_ms": 1769817600000,
+        "trace": {
+          "trace_id": "0123456789abcdef0123456789abcdef",
+          "span_id": "1111111111111111",
+          "span_kind": "root"
+        },
+        "producer": {
+          "layer": "cpo",
+          "component": "cpo.kernel"
+        },
+        "actor": {
+          "actor_kind": "user",
+          "actor_id": "user:boss"
+        },
+        "credential": {
+          "credential_kind": "bearer_token",
+          "issuer": "example-issuer",
+          "presented_hash_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "verified_at_ms": 1769817600000,
+          "expires_at_ms": 1769904000000
+        },
+        "grants": {
+          "policy.evaluate": true,
+          "tool.invoke": true
+        }
+      },
+      "canonical_json": "{\"actor\":{\"actor_id\":\"user:boss\",\"actor_kind\":\"user\"},\"canon_version\":\"1\",\"credential\":{\"credential_kind\":\"bearer_token\",\"expires_at_ms\":1769904000000,\"issuer\":\"example-issuer\",\"presented_hash_sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"verified_at_ms\":1769817600000},\"grants\":{\"policy.evaluate\":true,\"tool.invoke\":true},\"producer\":{\"component\":\"cpo.kernel\",\"layer\":\"cpo\"},\"record_type\":\"auth_context\",\"spec_version\":\"1.0.0\",\"trace\":{\"span_id\":\"1111111111111111\",\"span_kind\":\"root\",\"trace_id\":\"0123456789abcdef0123456789abcdef\"},\"ts_ms\":1769817600000}",
+      "sha256": "02711ccc70dde0e90587d5174c8b6e788bbeb080530765a1b641754679ca1702"
+    },
+    {
+      "name": "valid.empty_grants",
+      "input": {
+        "spec_version": "1.0.0",
+        "canon_version": "1",
+        "record_type": "auth_context",
+        "ts_ms": 1769817600000,
+        "trace": {
+          "trace_id": "0123456789abcdef0123456789abcdef",
+          "span_id": "1111111111111111",
+          "span_kind": "root"
+        },
+        "producer": {
+          "layer": "cpo",
+          "component": "cpo.kernel"
+        },
+        "actor": {
+          "actor_kind": "user",
+          "actor_id": "user:boss"
+        },
+        "credential": {
+          "credential_kind": "bearer_token",
+          "issuer": "example-issuer",
+          "presented_hash_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "verified_at_ms": 1769817600000,
+          "expires_at_ms": 1769904000000
+        },
+        "grants": {}
+      },
+      "canonical_json": "{\"actor\":{\"actor_id\":\"user:boss\",\"actor_kind\":\"user\"},\"canon_version\":\"1\",\"credential\":{\"credential_kind\":\"bearer_token\",\"expires_at_ms\":1769904000000,\"issuer\":\"example-issuer\",\"presented_hash_sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"verified_at_ms\":1769817600000},\"grants\":{},\"producer\":{\"component\":\"cpo.kernel\",\"layer\":\"cpo\"},\"record_type\":\"auth_context\",\"spec_version\":\"1.0.0\",\"trace\":{\"span_id\":\"1111111111111111\",\"span_kind\":\"root\",\"trace_id\":\"0123456789abcdef0123456789abcdef\"},\"ts_ms\":1769817600000}",
+      "sha256": "80cb2598b95aad0c08362c4ef03169c2481ecb8237dc820285124ab83305df28"
+    },
+    {
+      "name": "invalid.missing_trace",
+      "input": {
+        "spec_version": "1.0.0",
+        "canon_version": "1",
+        "record_type": "auth_context",
+        "ts_ms": 1769817600000,
+        "producer": {
+          "layer": "cpo",
+          "component": "cpo.kernel"
+        },
+        "actor": {
+          "actor_kind": "user",
+          "actor_id": "user:boss"
+        },
+        "credential": {
+          "credential_kind": "bearer_token",
+          "issuer": "example-issuer",
+          "presented_hash_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "verified_at_ms": 1769817600000,
+          "expires_at_ms": 1769904000000
+        },
+        "grants": {
+          "policy.evaluate": true,
+          "tool.invoke": true
+        }
+      },
+      "canonical_json": null,
+      "sha256": null
+    },
+    {
+      "name": "invalid.trace_missing_trace_id",
+      "input": {
+        "spec_version": "1.0.0",
+        "canon_version": "1",
+        "record_type": "auth_context",
+        "ts_ms": 1769817600000,
+        "trace": {
+          "span_id": "1111111111111111",
+          "span_kind": "root"
+        },
+        "producer": {
+          "layer": "cpo",
+          "component": "cpo.kernel"
+        },
+        "actor": {
+          "actor_kind": "user",
+          "actor_id": "user:boss"
+        },
+        "credential": {
+          "credential_kind": "bearer_token",
+          "issuer": "example-issuer",
+          "presented_hash_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "verified_at_ms": 1769817600000,
+          "expires_at_ms": 1769904000000
+        },
+        "grants": {
+          "policy.evaluate": true,
+          "tool.invoke": true
+        }
+      },
+      "canonical_json": null,
+      "sha256": null
+    },
+    {
+      "name": "invalid.unknown_field",
+      "input": {
+        "spec_version": "1.0.0",
+        "canon_version": "1",
+        "record_type": "auth_context",
+        "ts_ms": 1769817600000,
+        "trace": {
+          "trace_id": "0123456789abcdef0123456789abcdef",
+          "span_id": "1111111111111111",
+          "span_kind": "root"
+        },
+        "producer": {
+          "layer": "cpo",
+          "component": "cpo.kernel"
+        },
+        "actor": {
+          "actor_kind": "user",
+          "actor_id": "user:boss"
+        },
+        "credential": {
+          "credential_kind": "bearer_token",
+          "issuer": "example-issuer",
+          "presented_hash_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "verified_at_ms": 1769817600000,
+          "expires_at_ms": 1769904000000
+        },
+        "grants": {
+          "policy.evaluate": true,
+          "tool.invoke": true
+        },
+        "extra": "nope"
+      },
+      "canonical_json": null,
+      "sha256": null
+    },
+    {
+      "name": "invalid.bad_presented_hash",
+      "input": {
+        "spec_version": "1.0.0",
+        "canon_version": "1",
+        "record_type": "auth_context",
+        "ts_ms": 1769817600000,
+        "trace": {
+          "trace_id": "0123456789abcdef0123456789abcdef",
+          "span_id": "1111111111111111",
+          "span_kind": "root"
+        },
+        "producer": {
+          "layer": "cpo",
+          "component": "cpo.kernel"
+        },
+        "actor": {
+          "actor_kind": "user",
+          "actor_id": "user:boss"
+        },
+        "credential": {
+          "credential_kind": "bearer_token",
+          "issuer": "example-issuer",
+          "presented_hash_sha256": "abc",
+          "verified_at_ms": 1769817600000,
+          "expires_at_ms": 1769904000000
+        },
+        "grants": {
+          "policy.evaluate": true,
+          "tool.invoke": true
+        }
+      },
+      "canonical_json": null,
+      "sha256": null
+    }
+  ]
+}

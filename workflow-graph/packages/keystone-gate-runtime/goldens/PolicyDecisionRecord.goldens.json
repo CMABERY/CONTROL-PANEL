@@ -1,0 +1,248 @@
+{
+  "_meta": {
+    "spec_version": "1.0.0",
+    "canon_version": "1",
+    "generated_at": "2026-01-31T00:00:00Z",
+    "generator": "canonical-closeout (phase lock)"
+  },
+  "vectors": [
+    {
+      "name": "valid.allow",
+      "input": {
+        "spec_version": "1.0.0",
+        "canon_version": "1",
+        "record_type": "policy_decision",
+        "ts_ms": 1769817600001,
+        "trace": {
+          "trace_id": "0123456789abcdef0123456789abcdef",
+          "span_id": "3333333333333333",
+          "span_kind": "child",
+          "parent_span_id": "1111111111111111"
+        },
+        "producer": {
+          "layer": "cpo",
+          "component": "cpo.kernel"
+        },
+        "auth_context_envelope_sha256": "02711ccc70dde0e90587d5174c8b6e788bbeb080530765a1b641754679ca1702",
+        "policy": {
+          "policy_id": "policy.default",
+          "policy_version": "v1",
+          "policy_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "request": {
+          "action": "model.invoke",
+          "resource": "model:gpt-5"
+        },
+        "decision": {
+          "result": "allow",
+          "reason_codes": {
+            "allow.policy_ok": true
+          },
+          "obligations": {
+            "log.audit": true
+          }
+        }
+      },
+      "canonical_json": "{\"auth_context_envelope_sha256\":\"02711ccc70dde0e90587d5174c8b6e788bbeb080530765a1b641754679ca1702\",\"canon_version\":\"1\",\"decision\":{\"obligations\":{\"log.audit\":true},\"reason_codes\":{\"allow.policy_ok\":true},\"result\":\"allow\"},\"policy\":{\"policy_id\":\"policy.default\",\"policy_sha256\":\"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"policy_version\":\"v1\"},\"producer\":{\"component\":\"cpo.kernel\",\"layer\":\"cpo\"},\"record_type\":\"policy_decision\",\"request\":{\"action\":\"model.invoke\",\"resource\":\"model:gpt-5\"},\"spec_version\":\"1.0.0\",\"trace\":{\"parent_span_id\":\"1111111111111111\",\"span_id\":\"3333333333333333\",\"span_kind\":\"child\",\"trace_id\":\"0123456789abcdef0123456789abcdef\"},\"ts_ms\":1769817600001}",
+      "sha256": "bbea5793c8983e4ecb6da304d200ac3af93cca355f07f03f465ecbf0310a1ef9"
+    },
+    {
+      "name": "valid.deny_empty_obligations",
+      "input": {
+        "spec_version": "1.0.0",
+        "canon_version": "1",
+        "record_type": "policy_decision",
+        "ts_ms": 1769817600001,
+        "trace": {
+          "trace_id": "0123456789abcdef0123456789abcdef",
+          "span_id": "3333333333333333",
+          "span_kind": "child",
+          "parent_span_id": "1111111111111111"
+        },
+        "producer": {
+          "layer": "cpo",
+          "component": "cpo.kernel"
+        },
+        "auth_context_envelope_sha256": "02711ccc70dde0e90587d5174c8b6e788bbeb080530765a1b641754679ca1702",
+        "policy": {
+          "policy_id": "policy.default",
+          "policy_version": "v1",
+          "policy_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "request": {
+          "action": "model.invoke",
+          "resource": "model:gpt-5"
+        },
+        "decision": {
+          "result": "deny",
+          "reason_codes": {
+            "deny.policy_blocked": true
+          },
+          "obligations": {}
+        }
+      },
+      "canonical_json": "{\"auth_context_envelope_sha256\":\"02711ccc70dde0e90587d5174c8b6e788bbeb080530765a1b641754679ca1702\",\"canon_version\":\"1\",\"decision\":{\"obligations\":{},\"reason_codes\":{\"deny.policy_blocked\":true},\"result\":\"deny\"},\"policy\":{\"policy_id\":\"policy.default\",\"policy_sha256\":\"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"policy_version\":\"v1\"},\"producer\":{\"component\":\"cpo.kernel\",\"layer\":\"cpo\"},\"record_type\":\"policy_decision\",\"request\":{\"action\":\"model.invoke\",\"resource\":\"model:gpt-5\"},\"spec_version\":\"1.0.0\",\"trace\":{\"parent_span_id\":\"1111111111111111\",\"span_id\":\"3333333333333333\",\"span_kind\":\"child\",\"trace_id\":\"0123456789abcdef0123456789abcdef\"},\"ts_ms\":1769817600001}",
+      "sha256": "4a4316c32a128c07578c578480c73c220596af35553cf1263c7cb3cabe4ead3d"
+    },
+    {
+      "name": "invalid.missing_auth_context_hash",
+      "input": {
+        "spec_version": "1.0.0",
+        "canon_version": "1",
+        "record_type": "policy_decision",
+        "ts_ms": 1769817600001,
+        "trace": {
+          "trace_id": "0123456789abcdef0123456789abcdef",
+          "span_id": "3333333333333333",
+          "span_kind": "child",
+          "parent_span_id": "1111111111111111"
+        },
+        "producer": {
+          "layer": "cpo",
+          "component": "cpo.kernel"
+        },
+        "policy": {
+          "policy_id": "policy.default",
+          "policy_version": "v1",
+          "policy_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "request": {
+          "action": "model.invoke",
+          "resource": "model:gpt-5"
+        },
+        "decision": {
+          "result": "allow",
+          "reason_codes": {
+            "allow.policy_ok": true
+          },
+          "obligations": {
+            "log.audit": true
+          }
+        }
+      },
+      "canonical_json": null,
+      "sha256": null
+    },
+    {
+      "name": "invalid.decision_result_bad_enum",
+      "input": {
+        "spec_version": "1.0.0",
+        "canon_version": "1",
+        "record_type": "policy_decision",
+        "ts_ms": 1769817600001,
+        "trace": {
+          "trace_id": "0123456789abcdef0123456789abcdef",
+          "span_id": "3333333333333333",
+          "span_kind": "child",
+          "parent_span_id": "1111111111111111"
+        },
+        "producer": {
+          "layer": "cpo",
+          "component": "cpo.kernel"
+        },
+        "auth_context_envelope_sha256": "02711ccc70dde0e90587d5174c8b6e788bbeb080530765a1b641754679ca1702",
+        "policy": {
+          "policy_id": "policy.default",
+          "policy_version": "v1",
+          "policy_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "request": {
+          "action": "model.invoke",
+          "resource": "model:gpt-5"
+        },
+        "decision": {
+          "result": "maybe",
+          "reason_codes": {
+            "allow.policy_ok": true
+          },
+          "obligations": {
+            "log.audit": true
+          }
+        }
+      },
+      "canonical_json": null,
+      "sha256": null
+    },
+    {
+      "name": "invalid.unknown_field",
+      "input": {
+        "spec_version": "1.0.0",
+        "canon_version": "1",
+        "record_type": "policy_decision",
+        "ts_ms": 1769817600001,
+        "trace": {
+          "trace_id": "0123456789abcdef0123456789abcdef",
+          "span_id": "3333333333333333",
+          "span_kind": "child",
+          "parent_span_id": "1111111111111111"
+        },
+        "producer": {
+          "layer": "cpo",
+          "component": "cpo.kernel"
+        },
+        "auth_context_envelope_sha256": "02711ccc70dde0e90587d5174c8b6e788bbeb080530765a1b641754679ca1702",
+        "policy": {
+          "policy_id": "policy.default",
+          "policy_version": "v1",
+          "policy_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "request": {
+          "action": "model.invoke",
+          "resource": "model:gpt-5"
+        },
+        "decision": {
+          "result": "allow",
+          "reason_codes": {
+            "allow.policy_ok": true
+          },
+          "obligations": {
+            "log.audit": true
+          }
+        },
+        "x": 1
+      },
+      "canonical_json": null,
+      "sha256": null
+    },
+    {
+      "name": "invalid.reason_codes_array",
+      "input": {
+        "spec_version": "1.0.0",
+        "canon_version": "1",
+        "record_type": "policy_decision",
+        "ts_ms": 1769817600001,
+        "trace": {
+          "trace_id": "0123456789abcdef0123456789abcdef",
+          "span_id": "3333333333333333",
+          "span_kind": "child",
+          "parent_span_id": "1111111111111111"
+        },
+        "producer": {
+          "layer": "cpo",
+          "component": "cpo.kernel"
+        },
+        "auth_context_envelope_sha256": "02711ccc70dde0e90587d5174c8b6e788bbeb080530765a1b641754679ca1702",
+        "policy": {
+          "policy_id": "policy.default",
+          "policy_version": "v1",
+          "policy_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "request": {
+          "action": "model.invoke",
+          "resource": "model:gpt-5"
+        },
+        "decision": {
+          "result": "allow",
+          "reason_codes": [
+            "allow.policy_ok"
+          ],
+          "obligations": {
+            "log.audit": true
+          }
+        }
+      },
+      "canonical_json": null,
+      "sha256": null
+    }
+  ]
+}

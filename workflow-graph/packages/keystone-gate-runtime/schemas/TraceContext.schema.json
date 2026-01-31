@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://control-panel.local/schemas/keystone/TraceContext.schema.json",
+  "title": "TraceContext",
+  "oneOf": [
+    {
+      "title": "RootSpan",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trace_id", "span_id", "span_kind"],
+      "properties": {
+        "trace_id": { "$ref": "Shared.schema.json#/$defs/TraceId" },
+        "span_id": { "$ref": "Shared.schema.json#/$defs/SpanId" },
+        "span_kind": { "const": "root" }
+      }
+    },
+    {
+      "title": "ChildSpan",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trace_id", "span_id", "span_kind", "parent_span_id"],
+      "properties": {
+        "trace_id": { "$ref": "Shared.schema.json#/$defs/TraceId" },
+        "span_id": { "$ref": "Shared.schema.json#/$defs/SpanId" },
+        "span_kind": { "const": "child" },
+        "parent_span_id": { "$ref": "Shared.schema.json#/$defs/SpanId" }
+      }
+    }
+  ]
+}

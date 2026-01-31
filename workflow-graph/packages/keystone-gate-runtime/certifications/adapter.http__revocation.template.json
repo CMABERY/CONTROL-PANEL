@@ -1,0 +1,24 @@
+{
+  "_meta": {
+    "spec_version": "1.0.0",
+    "canon_version": "1",
+    "generated_at_ms": 1769817700000,
+    "generator": "phase4 revocation template"
+  },
+  "revocation_sha256": "54b000ec7c429bd8e7a71da34ed86019287088a47ef7154d65693834090ec010",
+  "revocation_canonical_json": "{\"adapter_id\":\"adapter.http\",\"artifact_kind\":\"adapter_certification_revocation\",\"canon_version\":\"1\",\"evidence\":{\"example_envelope_hash\":\"8504b310391f57e2d93a0ac2e540bb7da4dca41a020d7e09c71aedbd00f10620\",\"failure_class\":\"HASH_MISMATCH\"},\"reason\":\"hash_drift\",\"revoked_at_ms\":1769817700000,\"revoked_certification_sha256\":\"60e85a3c146eacee1a4d2db0f9c9aee6d6f52e154c5528cc156158b58daef3a9\",\"spec_version\":\"1.0.0\",\"status\":\"revoked\"}",
+  "revocation": {
+    "artifact_kind": "adapter_certification_revocation",
+    "adapter_id": "adapter.http",
+    "revoked_certification_sha256": "60e85a3c146eacee1a4d2db0f9c9aee6d6f52e154c5528cc156158b58daef3a9",
+    "spec_version": "1.0.0",
+    "canon_version": "1",
+    "revoked_at_ms": 1769817700000,
+    "reason": "hash_drift",
+    "evidence": {
+      "failure_class": "HASH_MISMATCH",
+      "example_envelope_hash": "8504b310391f57e2d93a0ac2e540bb7da4dca41a020d7e09c71aedbd00f10620"
+    },
+    "status": "revoked"
+  }
+}

@@ -1,0 +1,344 @@
+{
+  "_meta": {
+    "spec_version": "1.0.0",
+    "canon_version": "1",
+    "generated_at": "2026-01-31T00:00:00Z",
+    "generator": "phase4 conformance spec (multi-producer)"
+  },
+  "vectors": [
+    {
+      "name": "conf_auth_context_same_envelope_different_key_order",
+      "record_type": "auth_context",
+      "prereqs": [],
+      "inputs": [
+        {
+          "producer_id": "cpo_ingress_ref",
+          "input_json": "{\"spec_version\":\"1.0.0\",\"canon_version\":\"1\",\"record_type\":\"auth_context\",\"ts_ms\":1769817600000,\"trace\":{\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\",\"span_id\":\"00f067aa0ba902b7\",\"span_kind\":\"root\"},\"producer\":{\"layer\":\"cpo\",\"component\":\"ingress_gateway\"},\"actor\":{\"actor_kind\":\"human\",\"actor_id\":\"user:12345\"},\"credential\":{\"credential_kind\":\"jwt\",\"issuer\":\"auth.example\",\"presented_hash_sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"verified_at_ms\":1769817600000,\"expires_at_ms\":1769821200000},\"grants\":{\"role:viewer\":true,\"scope:read\":true}}"
+        },
+        {
+          "producer_id": "cpo_ingress_alt",
+          "input_json": "{\"grants\":{\"scope:read\":true,\"role:viewer\":true},\"credential\":{\"expires_at_ms\":1769821200000,\"verified_at_ms\":1769817600000,\"presented_hash_sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"issuer\":\"auth.example\",\"credential_kind\":\"jwt\"},\"actor\":{\"actor_id\":\"user:12345\",\"actor_kind\":\"human\"},\"producer\":{\"component\":\"ingress_gateway\",\"layer\":\"cpo\"},\"trace\":{\"span_kind\":\"root\",\"span_id\":\"00f067aa0ba902b7\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"},\"ts_ms\":1769817600000,\"record_type\":\"auth_context\",\"canon_version\":\"1\",\"spec_version\":\"1.0.0\"}"
+        }
+      ],
+      "expected": {
+        "canonical_json": "{\"actor\":{\"actor_id\":\"user:12345\",\"actor_kind\":\"human\"},\"canon_version\":\"1\",\"credential\":{\"credential_kind\":\"jwt\",\"expires_at_ms\":1769821200000,\"issuer\":\"auth.example\",\"presented_hash_sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"verified_at_ms\":1769817600000},\"grants\":{\"role:viewer\":true,\"scope:read\":true},\"producer\":{\"component\":\"ingress_gateway\",\"layer\":\"cpo\"},\"record_type\":\"auth_context\",\"spec_version\":\"1.0.0\",\"trace\":{\"span_id\":\"00f067aa0ba902b7\",\"span_kind\":\"root\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"},\"ts_ms\":1769817600000}",
+        "sha256": "2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75",
+        "commit": {
+          "overall": "accept"
+        }
+      }
+    },
+    {
+      "name": "conf_policy_decision_same_envelope_different_key_order",
+      "record_type": "policy_decision",
+      "prereqs": [
+        {
+          "record_type": "auth_context",
+          "envelope_sha256": "2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75"
+        }
+      ],
+      "inputs": [
+        {
+          "producer_id": "cpo_policy_ref",
+          "input_json": "{\"spec_version\":\"1.0.0\",\"canon_version\":\"1\",\"record_type\":\"policy_decision\",\"ts_ms\":1769817600200,\"trace\":{\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\",\"span_id\":\"b7ad6b7169203331\",\"span_kind\":\"child\",\"parent_span_id\":\"00f067aa0ba902b7\"},\"producer\":{\"layer\":\"cpo\",\"component\":\"policy_engine\"},\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"policy\":{\"policy_id\":\"cpo.default\",\"policy_version\":\"2026_01_31\",\"policy_sha256\":\"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\"},\"request\":{\"action\":\"model.invoke\",\"resource\":\"model:gpt-5\"},\"decision\":{\"result\":\"allow\",\"reason_codes\":{\"allow\":true},\"obligations\":{}}}"
+        },
+        {
+          "producer_id": "cpo_policy_alt",
+          "input_json": "{\"decision\":{\"obligations\":{},\"reason_codes\":{\"allow\":true},\"result\":\"allow\"},\"request\":{\"resource\":\"model:gpt-5\",\"action\":\"model.invoke\"},\"policy\":{\"policy_sha256\":\"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\",\"policy_version\":\"2026_01_31\",\"policy_id\":\"cpo.default\"},\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"producer\":{\"component\":\"policy_engine\",\"layer\":\"cpo\"},\"trace\":{\"parent_span_id\":\"00f067aa0ba902b7\",\"span_kind\":\"child\",\"span_id\":\"b7ad6b7169203331\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"},\"ts_ms\":1769817600200,\"record_type\":\"policy_decision\",\"canon_version\":\"1\",\"spec_version\":\"1.0.0\"}"
+        }
+      ],
+      "expected": {
+        "canonical_json": "{\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"canon_version\":\"1\",\"decision\":{\"obligations\":{},\"reason_codes\":{\"allow\":true},\"result\":\"allow\"},\"policy\":{\"policy_id\":\"cpo.default\",\"policy_sha256\":\"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\",\"policy_version\":\"2026_01_31\"},\"producer\":{\"component\":\"policy_engine\",\"layer\":\"cpo\"},\"record_type\":\"policy_decision\",\"request\":{\"action\":\"model.invoke\",\"resource\":\"model:gpt-5\"},\"spec_version\":\"1.0.0\",\"trace\":{\"parent_span_id\":\"00f067aa0ba902b7\",\"span_id\":\"b7ad6b7169203331\",\"span_kind\":\"child\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"},\"ts_ms\":1769817600200}",
+        "sha256": "5d4918317e12975fee1c9f099875853f0c752bffa18a6bc1b35ad570030185c1",
+        "commit": {
+          "overall": "accept"
+        }
+      }
+    },
+    {
+      "name": "conf_policy_decision_allow_tool_invoke_same_envelope_different_key_order",
+      "record_type": "policy_decision",
+      "prereqs": [
+        {
+          "record_type": "auth_context",
+          "envelope_sha256": "2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75"
+        }
+      ],
+      "inputs": [
+        {
+          "producer_id": "cpo_policy_tool_ref",
+          "input_json": "{\"spec_version\":\"1.0.0\",\"canon_version\":\"1\",\"record_type\":\"policy_decision\",\"ts_ms\":1769817600250,\"trace\":{\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\",\"span_id\":\"b7ad6b7169203331\",\"span_kind\":\"child\",\"parent_span_id\":\"00f067aa0ba902b7\"},\"producer\":{\"layer\":\"cpo\",\"component\":\"policy_engine\"},\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"policy\":{\"policy_id\":\"cpo.default\",\"policy_version\":\"2026_01_31\",\"policy_sha256\":\"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\"},\"request\":{\"action\":\"tool.invoke\",\"resource\":\"tool:http.fetch\"},\"decision\":{\"result\":\"allow\",\"reason_codes\":{\"allow\":true},\"obligations\":{}}}"
+        },
+        {
+          "producer_id": "cpo_policy_tool_alt",
+          "input_json": "{\"decision\":{\"obligations\":{},\"reason_codes\":{\"allow\":true},\"result\":\"allow\"},\"request\":{\"resource\":\"tool:http.fetch\",\"action\":\"tool.invoke\"},\"policy\":{\"policy_sha256\":\"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\",\"policy_version\":\"2026_01_31\",\"policy_id\":\"cpo.default\"},\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"producer\":{\"component\":\"policy_engine\",\"layer\":\"cpo\"},\"trace\":{\"parent_span_id\":\"00f067aa0ba902b7\",\"span_kind\":\"child\",\"span_id\":\"b7ad6b7169203331\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"},\"ts_ms\":1769817600250,\"record_type\":\"policy_decision\",\"canon_version\":\"1\",\"spec_version\":\"1.0.0\"}"
+        }
+      ],
+      "expected": {
+        "canonical_json": "{\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"canon_version\":\"1\",\"decision\":{\"obligations\":{},\"reason_codes\":{\"allow\":true},\"result\":\"allow\"},\"policy\":{\"policy_id\":\"cpo.default\",\"policy_sha256\":\"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\",\"policy_version\":\"2026_01_31\"},\"producer\":{\"component\":\"policy_engine\",\"layer\":\"cpo\"},\"record_type\":\"policy_decision\",\"request\":{\"action\":\"tool.invoke\",\"resource\":\"tool:http.fetch\"},\"spec_version\":\"1.0.0\",\"trace\":{\"parent_span_id\":\"00f067aa0ba902b7\",\"span_id\":\"b7ad6b7169203331\",\"span_kind\":\"child\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"},\"ts_ms\":1769817600250}",
+        "sha256": "9e10b1a5443bc848639d26c45dc120497259d96d764547f8496c4bc111ea30c2",
+        "commit": {
+          "overall": "accept"
+        }
+      }
+    },
+    {
+      "name": "conf_auth_context_service_same_envelope_different_key_order",
+      "record_type": "auth_context",
+      "prereqs": [],
+      "inputs": [
+        {
+          "producer_id": "cpo_ingress_svc_ref",
+          "input_json": "{\"spec_version\":\"1.0.0\",\"canon_version\":\"1\",\"record_type\":\"auth_context\",\"ts_ms\":1769817600000,\"trace\":{\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\",\"span_id\":\"0000000000000002\",\"span_kind\":\"root\"},\"producer\":{\"layer\":\"cpo\",\"component\":\"ingress_gateway\"},\"actor\":{\"actor_id\":\"svc:adapter.http\",\"actor_kind\":\"service\"},\"credential\":{\"credential_kind\":\"mtls\",\"issuer\":\"mtls.example\",\"presented_hash_sha256\":\"dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\",\"verified_at_ms\":1769817600000,\"expires_at_ms\":1769821200000},\"grants\":{\"role:adapter\":true}}"
+        },
+        {
+          "producer_id": "cpo_ingress_svc_alt",
+          "input_json": "{\"grants\":{\"role:adapter\":true},\"credential\":{\"expires_at_ms\":1769821200000,\"verified_at_ms\":1769817600000,\"presented_hash_sha256\":\"dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\",\"issuer\":\"mtls.example\",\"credential_kind\":\"mtls\"},\"actor\":{\"actor_kind\":\"service\",\"actor_id\":\"svc:adapter.http\"},\"producer\":{\"component\":\"ingress_gateway\",\"layer\":\"cpo\"},\"trace\":{\"span_kind\":\"root\",\"span_id\":\"0000000000000002\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"},\"ts_ms\":1769817600000,\"record_type\":\"auth_context\",\"canon_version\":\"1\",\"spec_version\":\"1.0.0\"}"
+        }
+      ],
+      "expected": {
+        "canonical_json": "{\"actor\":{\"actor_id\":\"svc:adapter.http\",\"actor_kind\":\"service\"},\"canon_version\":\"1\",\"credential\":{\"credential_kind\":\"mtls\",\"expires_at_ms\":1769821200000,\"issuer\":\"mtls.example\",\"presented_hash_sha256\":\"dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\",\"verified_at_ms\":1769817600000},\"grants\":{\"role:adapter\":true},\"producer\":{\"component\":\"ingress_gateway\",\"layer\":\"cpo\"},\"record_type\":\"auth_context\",\"spec_version\":\"1.0.0\",\"trace\":{\"span_id\":\"0000000000000002\",\"span_kind\":\"root\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"},\"ts_ms\":1769817600000}",
+        "sha256": "c9a345be19386a3c8141f1a0655bc5f9cf92d3fbd809488c15d0d95f040f5607",
+        "commit": {
+          "overall": "accept"
+        }
+      }
+    },
+    {
+      "name": "conf_policy_decision_deny_tool_invoke_same_envelope_different_key_order",
+      "record_type": "policy_decision",
+      "prereqs": [
+        {
+          "record_type": "auth_context",
+          "envelope_sha256": "c9a345be19386a3c8141f1a0655bc5f9cf92d3fbd809488c15d0d95f040f5607"
+        }
+      ],
+      "inputs": [
+        {
+          "producer_id": "cpo_policy_deny_ref",
+          "input_json": "{\"spec_version\":\"1.0.0\",\"canon_version\":\"1\",\"record_type\":\"policy_decision\",\"ts_ms\":1769817600100,\"trace\":{\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\",\"span_id\":\"0000000000000003\",\"parent_span_id\":\"0000000000000002\",\"span_kind\":\"child\"},\"producer\":{\"layer\":\"cpo\",\"component\":\"policy_engine\"},\"auth_context_envelope_sha256\":\"c9a345be19386a3c8141f1a0655bc5f9cf92d3fbd809488c15d0d95f040f5607\",\"policy\":{\"policy_id\":\"cpo.default\",\"policy_version\":\"2026_01_31\",\"policy_sha256\":\"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\"},\"request\":{\"action\":\"tool.invoke\",\"resource\":\"tool:http.fetch\"},\"decision\":{\"result\":\"deny\",\"reason_codes\":{\"deny.policy\":true},\"obligations\":{}}}"
+        },
+        {
+          "producer_id": "cpo_policy_deny_alt",
+          "input_json": "{\"decision\":{\"obligations\":{},\"reason_codes\":{\"deny.policy\":true},\"result\":\"deny\"},\"request\":{\"resource\":\"tool:http.fetch\",\"action\":\"tool.invoke\"},\"policy\":{\"policy_sha256\":\"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\",\"policy_version\":\"2026_01_31\",\"policy_id\":\"cpo.default\"},\"auth_context_envelope_sha256\":\"c9a345be19386a3c8141f1a0655bc5f9cf92d3fbd809488c15d0d95f040f5607\",\"producer\":{\"component\":\"policy_engine\",\"layer\":\"cpo\"},\"trace\":{\"span_kind\":\"child\",\"parent_span_id\":\"0000000000000002\",\"span_id\":\"0000000000000003\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"},\"ts_ms\":1769817600100,\"record_type\":\"policy_decision\",\"canon_version\":\"1\",\"spec_version\":\"1.0.0\"}"
+        }
+      ],
+      "expected": {
+        "canonical_json": "{\"auth_context_envelope_sha256\":\"c9a345be19386a3c8141f1a0655bc5f9cf92d3fbd809488c15d0d95f040f5607\",\"canon_version\":\"1\",\"decision\":{\"obligations\":{},\"reason_codes\":{\"deny.policy\":true},\"result\":\"deny\"},\"policy\":{\"policy_id\":\"cpo.default\",\"policy_sha256\":\"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\",\"policy_version\":\"2026_01_31\"},\"producer\":{\"component\":\"policy_engine\",\"layer\":\"cpo\"},\"record_type\":\"policy_decision\",\"request\":{\"action\":\"tool.invoke\",\"resource\":\"tool:http.fetch\"},\"spec_version\":\"1.0.0\",\"trace\":{\"parent_span_id\":\"0000000000000002\",\"span_id\":\"0000000000000003\",\"span_kind\":\"child\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"},\"ts_ms\":1769817600100}",
+        "sha256": "20d12463be024b0ff0d92f53f9de19dab27ee7b08545f182081454452e10a412",
+        "commit": {
+          "overall": "accept"
+        }
+      }
+    },
+    {
+      "name": "conf_model_call_same_envelope_different_key_order",
+      "record_type": "model_call",
+      "prereqs": [
+        {
+          "record_type": "auth_context",
+          "envelope_sha256": "2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75"
+        },
+        {
+          "record_type": "policy_decision",
+          "envelope_sha256": "5d4918317e12975fee1c9f099875853f0c752bffa18a6bc1b35ad570030185c1"
+        }
+      ],
+      "inputs": [
+        {
+          "producer_id": "flow_runtime_ref",
+          "input_json": "{\"spec_version\":\"1.0.0\",\"canon_version\":\"1\",\"record_type\":\"model_call\",\"started_at_ms\":1769817601000,\"ended_at_ms\":1769817601500,\"trace\":{\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\",\"span_id\":\"c3ab8ff13720e8ad\",\"span_kind\":\"child\",\"parent_span_id\":\"b7ad6b7169203331\"},\"producer\":{\"layer\":\"flow\",\"component\":\"flow_runtime\"},\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"policy_decision_envelope_sha256\":\"5d4918317e12975fee1c9f099875853f0c752bffa18a6bc1b35ad570030185c1\",\"model\":{\"provider\":\"openai\",\"model\":\"gpt-5.2-pro\"},\"request\":{\"content_type\":\"application/json\",\"sha256\":\"dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\",\"size_bytes\":1234},\"response\":{\"content_type\":\"application/json\",\"sha256\":\"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\",\"size_bytes\":2345},\"outcome\":{\"status\":\"ok\"},\"usage\":{\"input_tokens\":12,\"output_tokens\":34,\"total_tokens\":46}}"
+        },
+        {
+          "producer_id": "flow_runtime_alt",
+          "input_json": "{\"usage\":{\"total_tokens\":46,\"output_tokens\":34,\"input_tokens\":12},\"outcome\":{\"status\":\"ok\"},\"response\":{\"size_bytes\":2345,\"sha256\":\"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\",\"content_type\":\"application/json\"},\"request\":{\"size_bytes\":1234,\"sha256\":\"dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\",\"content_type\":\"application/json\"},\"model\":{\"model\":\"gpt-5.2-pro\",\"provider\":\"openai\"},\"policy_decision_envelope_sha256\":\"5d4918317e12975fee1c9f099875853f0c752bffa18a6bc1b35ad570030185c1\",\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"producer\":{\"component\":\"flow_runtime\",\"layer\":\"flow\"},\"trace\":{\"parent_span_id\":\"b7ad6b7169203331\",\"span_kind\":\"child\",\"span_id\":\"c3ab8ff13720e8ad\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"},\"ended_at_ms\":1769817601500,\"started_at_ms\":1769817601000,\"record_type\":\"model_call\",\"canon_version\":\"1\",\"spec_version\":\"1.0.0\"}"
+        }
+      ],
+      "expected": {
+        "canonical_json": "{\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"canon_version\":\"1\",\"ended_at_ms\":1769817601500,\"model\":{\"model\":\"gpt-5.2-pro\",\"provider\":\"openai\"},\"outcome\":{\"status\":\"ok\"},\"policy_decision_envelope_sha256\":\"5d4918317e12975fee1c9f099875853f0c752bffa18a6bc1b35ad570030185c1\",\"producer\":{\"component\":\"flow_runtime\",\"layer\":\"flow\"},\"record_type\":\"model_call\",\"request\":{\"content_type\":\"application/json\",\"sha256\":\"dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\",\"size_bytes\":1234},\"response\":{\"content_type\":\"application/json\",\"sha256\":\"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\",\"size_bytes\":2345},\"spec_version\":\"1.0.0\",\"started_at_ms\":1769817601000,\"trace\":{\"parent_span_id\":\"b7ad6b7169203331\",\"span_id\":\"c3ab8ff13720e8ad\",\"span_kind\":\"child\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"},\"usage\":{\"input_tokens\":12,\"output_tokens\":34,\"total_tokens\":46}}",
+        "sha256": "619faf630ed562b5f7fca8687ac6eba13bda5da844029ccf70ec2f1b6a6bfe0f",
+        "commit": {
+          "overall": "accept"
+        }
+      }
+    },
+    {
+      "name": "conf_tool_call_same_envelope_different_key_order",
+      "record_type": "tool_call",
+      "prereqs": [
+        {
+          "record_type": "auth_context",
+          "envelope_sha256": "2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75"
+        },
+        {
+          "record_type": "policy_decision",
+          "envelope_sha256": "9e10b1a5443bc848639d26c45dc120497259d96d764547f8496c4bc111ea30c2"
+        }
+      ],
+      "inputs": [
+        {
+          "producer_id": "adapter_http_ref",
+          "input_json": "{\"spec_version\":\"1.0.0\",\"canon_version\":\"1\",\"record_type\":\"tool_call\",\"started_at_ms\":1769817603000,\"ended_at_ms\":1769817603200,\"trace\":{\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\",\"span_id\":\"5c1d3a2b4f6e7d8c\",\"span_kind\":\"child\",\"parent_span_id\":\"b7ad6b7169203331\"},\"producer\":{\"layer\":\"adapter\",\"component\":\"adapter_http\"},\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"policy_decision_envelope_sha256\":\"9e10b1a5443bc848639d26c45dc120497259d96d764547f8496c4bc111ea30c2\",\"tool\":{\"adapter_id\":\"adapter.http\",\"tool_name\":\"http.fetch\"},\"request\":{\"content_type\":\"application/json\",\"sha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"size_bytes\":210},\"response\":{\"content_type\":\"application/json\",\"sha256\":\"2222222222222222222222222222222222222222222222222222222222222222\",\"size_bytes\":980},\"outcome\":{\"status\":\"ok\"}}"
+        },
+        {
+          "producer_id": "adapter_http_alt",
+          "input_json": "{\"outcome\":{\"status\":\"ok\"},\"response\":{\"size_bytes\":980,\"sha256\":\"2222222222222222222222222222222222222222222222222222222222222222\",\"content_type\":\"application/json\"},\"request\":{\"size_bytes\":210,\"sha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"content_type\":\"application/json\"},\"tool\":{\"tool_name\":\"http.fetch\",\"adapter_id\":\"adapter.http\"},\"policy_decision_envelope_sha256\":\"9e10b1a5443bc848639d26c45dc120497259d96d764547f8496c4bc111ea30c2\",\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"producer\":{\"component\":\"adapter_http\",\"layer\":\"adapter\"},\"trace\":{\"parent_span_id\":\"b7ad6b7169203331\",\"span_kind\":\"child\",\"span_id\":\"5c1d3a2b4f6e7d8c\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"},\"ended_at_ms\":1769817603200,\"started_at_ms\":1769817603000,\"record_type\":\"tool_call\",\"canon_version\":\"1\",\"spec_version\":\"1.0.0\"}"
+        }
+      ],
+      "expected": {
+        "canonical_json": "{\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"canon_version\":\"1\",\"ended_at_ms\":1769817603200,\"outcome\":{\"status\":\"ok\"},\"policy_decision_envelope_sha256\":\"9e10b1a5443bc848639d26c45dc120497259d96d764547f8496c4bc111ea30c2\",\"producer\":{\"component\":\"adapter_http\",\"layer\":\"adapter\"},\"record_type\":\"tool_call\",\"request\":{\"content_type\":\"application/json\",\"sha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"size_bytes\":210},\"response\":{\"content_type\":\"application/json\",\"sha256\":\"2222222222222222222222222222222222222222222222222222222222222222\",\"size_bytes\":980},\"spec_version\":\"1.0.0\",\"started_at_ms\":1769817603000,\"tool\":{\"adapter_id\":\"adapter.http\",\"tool_name\":\"http.fetch\"},\"trace\":{\"parent_span_id\":\"b7ad6b7169203331\",\"span_id\":\"5c1d3a2b4f6e7d8c\",\"span_kind\":\"child\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"}}",
+        "sha256": "8504b310391f57e2d93a0ac2e540bb7da4dca41a020d7e09c71aedbd00f10620",
+        "commit": {
+          "overall": "accept"
+        }
+      }
+    },
+    {
+      "name": "conf_schema_reject_additional_properties",
+      "record_type": "auth_context",
+      "prereqs": [],
+      "inputs": [
+        {
+          "producer_id": "cpo_ingress_ref",
+          "input_json": "{\"spec_version\":\"1.0.0\",\"canon_version\":\"1\",\"record_type\":\"auth_context\",\"ts_ms\":1769817600000,\"trace\":{\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\",\"span_id\":\"00f067aa0ba902b7\",\"span_kind\":\"root\"},\"producer\":{\"layer\":\"cpo\",\"component\":\"ingress_gateway\"},\"actor\":{\"actor_kind\":\"human\",\"actor_id\":\"user:12345\"},\"credential\":{\"credential_kind\":\"jwt\",\"issuer\":\"auth.example\",\"presented_hash_sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"verified_at_ms\":1769817600000,\"expires_at_ms\":1769821200000},\"grants\":{\"role:viewer\":true,\"scope:read\":true},\"extra\":1}"
+        },
+        {
+          "producer_id": "cpo_ingress_alt",
+          "input_json": "{\"extra\":1,\"grants\":{\"scope:read\":true,\"role:viewer\":true},\"credential\":{\"expires_at_ms\":1769821200000,\"verified_at_ms\":1769817600000,\"presented_hash_sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"issuer\":\"auth.example\",\"credential_kind\":\"jwt\"},\"actor\":{\"actor_id\":\"user:12345\",\"actor_kind\":\"human\"},\"producer\":{\"component\":\"ingress_gateway\",\"layer\":\"cpo\"},\"trace\":{\"span_kind\":\"root\",\"span_id\":\"00f067aa0ba902b7\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"},\"ts_ms\":1769817600000,\"record_type\":\"auth_context\",\"canon_version\":\"1\",\"spec_version\":\"1.0.0\"}"
+        }
+      ],
+      "expected": {
+        "canonical_json": null,
+        "sha256": null,
+        "commit": {
+          "overall": "reject",
+          "classification": "SCHEMA_REJECT"
+        }
+      }
+    },
+    {
+      "name": "conf_hash_mismatch_buggy_producers",
+      "record_type": "tool_call",
+      "prereqs": [
+        {
+          "record_type": "auth_context",
+          "envelope_sha256": "2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75"
+        },
+        {
+          "record_type": "policy_decision",
+          "envelope_sha256": "9e10b1a5443bc848639d26c45dc120497259d96d764547f8496c4bc111ea30c2"
+        }
+      ],
+      "inputs": [
+        {
+          "producer_id": "adapter_http_buggy_stringify",
+          "input_json": "{\"spec_version\":\"1.0.0\",\"canon_version\":\"1\",\"record_type\":\"tool_call\",\"started_at_ms\":1769817603000,\"ended_at_ms\":1769817603200,\"trace\":{\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\",\"span_id\":\"5c1d3a2b4f6e7d8c\",\"span_kind\":\"child\",\"parent_span_id\":\"b7ad6b7169203331\"},\"producer\":{\"layer\":\"adapter\",\"component\":\"adapter_http\"},\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"policy_decision_envelope_sha256\":\"9e10b1a5443bc848639d26c45dc120497259d96d764547f8496c4bc111ea30c2\",\"tool\":{\"adapter_id\":\"adapter.http\",\"tool_name\":\"http.fetch\"},\"request\":{\"content_type\":\"application/json\",\"sha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"size_bytes\":210},\"response\":{\"content_type\":\"application/json\",\"sha256\":\"2222222222222222222222222222222222222222222222222222222222222222\",\"size_bytes\":980},\"outcome\":{\"status\":\"ok\"}}"
+        },
+        {
+          "producer_id": "adapter_http_buggy_stringify_alt",
+          "input_json": "{\"outcome\":{\"status\":\"ok\"},\"response\":{\"size_bytes\":980,\"sha256\":\"2222222222222222222222222222222222222222222222222222222222222222\",\"content_type\":\"application/json\"},\"request\":{\"size_bytes\":210,\"sha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"content_type\":\"application/json\"},\"tool\":{\"tool_name\":\"http.fetch\",\"adapter_id\":\"adapter.http\"},\"policy_decision_envelope_sha256\":\"9e10b1a5443bc848639d26c45dc120497259d96d764547f8496c4bc111ea30c2\",\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"producer\":{\"component\":\"adapter_http\",\"layer\":\"adapter\"},\"trace\":{\"parent_span_id\":\"b7ad6b7169203331\",\"span_kind\":\"child\",\"span_id\":\"5c1d3a2b4f6e7d8c\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"},\"ended_at_ms\":1769817603200,\"started_at_ms\":1769817603000,\"record_type\":\"tool_call\",\"canon_version\":\"1\",\"spec_version\":\"1.0.0\"}"
+        }
+      ],
+      "expected": {
+        "canonical_json": "{\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"canon_version\":\"1\",\"ended_at_ms\":1769817603200,\"outcome\":{\"status\":\"ok\"},\"policy_decision_envelope_sha256\":\"9e10b1a5443bc848639d26c45dc120497259d96d764547f8496c4bc111ea30c2\",\"producer\":{\"component\":\"adapter_http\",\"layer\":\"adapter\"},\"record_type\":\"tool_call\",\"request\":{\"content_type\":\"application/json\",\"sha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"size_bytes\":210},\"response\":{\"content_type\":\"application/json\",\"sha256\":\"2222222222222222222222222222222222222222222222222222222222222222\",\"size_bytes\":980},\"spec_version\":\"1.0.0\",\"started_at_ms\":1769817603000,\"tool\":{\"adapter_id\":\"adapter.http\",\"tool_name\":\"http.fetch\"},\"trace\":{\"parent_span_id\":\"b7ad6b7169203331\",\"span_id\":\"5c1d3a2b4f6e7d8c\",\"span_kind\":\"child\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"}}",
+        "sha256": "8504b310391f57e2d93a0ac2e540bb7da4dca41a020d7e09c71aedbd00f10620",
+        "commit": {
+          "overall": "reject",
+          "classification": "HASH_MISMATCH"
+        }
+      }
+    },
+    {
+      "name": "conf_missing_prereq_policy_decision",
+      "record_type": "tool_call",
+      "prereqs": [
+        {
+          "record_type": "auth_context",
+          "envelope_sha256": "2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75"
+        }
+      ],
+      "inputs": [
+        {
+          "producer_id": "adapter_http_ref",
+          "input_json": "{\"spec_version\":\"1.0.0\",\"canon_version\":\"1\",\"record_type\":\"tool_call\",\"started_at_ms\":1769817603000,\"ended_at_ms\":1769817603200,\"trace\":{\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\",\"span_id\":\"5c1d3a2b4f6e7d8c\",\"span_kind\":\"child\",\"parent_span_id\":\"b7ad6b7169203331\"},\"producer\":{\"layer\":\"adapter\",\"component\":\"adapter_http\"},\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"policy_decision_envelope_sha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"tool\":{\"adapter_id\":\"adapter.http\",\"tool_name\":\"http.fetch\"},\"request\":{\"content_type\":\"application/json\",\"sha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"size_bytes\":210},\"response\":{\"content_type\":\"application/json\",\"sha256\":\"2222222222222222222222222222222222222222222222222222222222222222\",\"size_bytes\":980},\"outcome\":{\"status\":\"ok\"}}"
+        },
+        {
+          "producer_id": "adapter_http_alt",
+          "input_json": "{\"outcome\":{\"status\":\"ok\"},\"response\":{\"size_bytes\":980,\"sha256\":\"2222222222222222222222222222222222222222222222222222222222222222\",\"content_type\":\"application/json\"},\"request\":{\"size_bytes\":210,\"sha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"content_type\":\"application/json\"},\"tool\":{\"tool_name\":\"http.fetch\",\"adapter_id\":\"adapter.http\"},\"policy_decision_envelope_sha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"producer\":{\"component\":\"adapter_http\",\"layer\":\"adapter\"},\"trace\":{\"parent_span_id\":\"b7ad6b7169203331\",\"span_kind\":\"child\",\"span_id\":\"5c1d3a2b4f6e7d8c\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"},\"ended_at_ms\":1769817603200,\"started_at_ms\":1769817603000,\"record_type\":\"tool_call\",\"canon_version\":\"1\",\"spec_version\":\"1.0.0\"}"
+        }
+      ],
+      "expected": {
+        "canonical_json": "{\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"canon_version\":\"1\",\"ended_at_ms\":1769817603200,\"outcome\":{\"status\":\"ok\"},\"policy_decision_envelope_sha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"producer\":{\"component\":\"adapter_http\",\"layer\":\"adapter\"},\"record_type\":\"tool_call\",\"request\":{\"content_type\":\"application/json\",\"sha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"size_bytes\":210},\"response\":{\"content_type\":\"application/json\",\"sha256\":\"2222222222222222222222222222222222222222222222222222222222222222\",\"size_bytes\":980},\"spec_version\":\"1.0.0\",\"started_at_ms\":1769817603000,\"tool\":{\"adapter_id\":\"adapter.http\",\"tool_name\":\"http.fetch\"},\"trace\":{\"parent_span_id\":\"b7ad6b7169203331\",\"span_id\":\"5c1d3a2b4f6e7d8c\",\"span_kind\":\"child\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"}}",
+        "sha256": "d5a269534c355f9d6fc44c7570f313faa38baf87dc63dd1e422a05c2251d62aa",
+        "commit": {
+          "overall": "reject",
+          "classification": "MISSING_PREREQ"
+        }
+      }
+    },
+    {
+      "name": "conf_trace_violation_trace_id_mismatch",
+      "record_type": "tool_call",
+      "prereqs": [
+        {
+          "record_type": "auth_context",
+          "envelope_sha256": "2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75"
+        },
+        {
+          "record_type": "policy_decision",
+          "envelope_sha256": "9e10b1a5443bc848639d26c45dc120497259d96d764547f8496c4bc111ea30c2"
+        }
+      ],
+      "inputs": [
+        {
+          "producer_id": "adapter_http_ref",
+          "input_json": "{\"spec_version\":\"1.0.0\",\"canon_version\":\"1\",\"record_type\":\"tool_call\",\"started_at_ms\":1769817603000,\"ended_at_ms\":1769817603200,\"trace\":{\"trace_id\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"span_id\":\"5c1d3a2b4f6e7d8c\",\"span_kind\":\"child\",\"parent_span_id\":\"b7ad6b7169203331\"},\"producer\":{\"layer\":\"adapter\",\"component\":\"adapter_http\"},\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"policy_decision_envelope_sha256\":\"9e10b1a5443bc848639d26c45dc120497259d96d764547f8496c4bc111ea30c2\",\"tool\":{\"adapter_id\":\"adapter.http\",\"tool_name\":\"http.fetch\"},\"request\":{\"content_type\":\"application/json\",\"sha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"size_bytes\":210},\"response\":{\"content_type\":\"application/json\",\"sha256\":\"2222222222222222222222222222222222222222222222222222222222222222\",\"size_bytes\":980},\"outcome\":{\"status\":\"ok\"}}"
+        },
+        {
+          "producer_id": "adapter_http_alt",
+          "input_json": "{\"outcome\":{\"status\":\"ok\"},\"response\":{\"size_bytes\":980,\"sha256\":\"2222222222222222222222222222222222222222222222222222222222222222\",\"content_type\":\"application/json\"},\"request\":{\"size_bytes\":210,\"sha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"content_type\":\"application/json\"},\"tool\":{\"tool_name\":\"http.fetch\",\"adapter_id\":\"adapter.http\"},\"policy_decision_envelope_sha256\":\"9e10b1a5443bc848639d26c45dc120497259d96d764547f8496c4bc111ea30c2\",\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"producer\":{\"component\":\"adapter_http\",\"layer\":\"adapter\"},\"trace\":{\"parent_span_id\":\"b7ad6b7169203331\",\"span_kind\":\"child\",\"span_id\":\"5c1d3a2b4f6e7d8c\",\"trace_id\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"},\"ended_at_ms\":1769817603200,\"started_at_ms\":1769817603000,\"record_type\":\"tool_call\",\"canon_version\":\"1\",\"spec_version\":\"1.0.0\"}"
+        }
+      ],
+      "expected": {
+        "canonical_json": "{\"auth_context_envelope_sha256\":\"2a6827a89f7b75ffd893112a8f498485f8010f7af0d93fdd6f101caa046f2b75\",\"canon_version\":\"1\",\"ended_at_ms\":1769817603200,\"outcome\":{\"status\":\"ok\"},\"policy_decision_envelope_sha256\":\"9e10b1a5443bc848639d26c45dc120497259d96d764547f8496c4bc111ea30c2\",\"producer\":{\"component\":\"adapter_http\",\"layer\":\"adapter\"},\"record_type\":\"tool_call\",\"request\":{\"content_type\":\"application/json\",\"sha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"size_bytes\":210},\"response\":{\"content_type\":\"application/json\",\"sha256\":\"2222222222222222222222222222222222222222222222222222222222222222\",\"size_bytes\":980},\"spec_version\":\"1.0.0\",\"started_at_ms\":1769817603000,\"tool\":{\"adapter_id\":\"adapter.http\",\"tool_name\":\"http.fetch\"},\"trace\":{\"parent_span_id\":\"b7ad6b7169203331\",\"span_id\":\"5c1d3a2b4f6e7d8c\",\"span_kind\":\"child\",\"trace_id\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}}",
+        "sha256": "d0d1ef7dc892647d583285439bdcd32b4ddacde20db7075325c345a3c5e0b78c",
+        "commit": {
+          "overall": "reject",
+          "classification": "TRACE_VIOLATION"
+        }
+      }
+    },
+    {
+      "name": "conf_unauthorized_execution_policy_deny",
+      "record_type": "tool_call",
+      "prereqs": [
+        {
+          "record_type": "auth_context",
+          "envelope_sha256": "c9a345be19386a3c8141f1a0655bc5f9cf92d3fbd809488c15d0d95f040f5607"
+        },
+        {
+          "record_type": "policy_decision",
+          "envelope_sha256": "20d12463be024b0ff0d92f53f9de19dab27ee7b08545f182081454452e10a412"
+        }
+      ],
+      "inputs": [
+        {
+          "producer_id": "adapter_fs_ref",
+          "input_json": "{\"spec_version\":\"1.0.0\",\"canon_version\":\"1\",\"record_type\":\"tool_call\",\"started_at_ms\":1769817605000,\"ended_at_ms\":1769817605200,\"trace\":{\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\",\"span_id\":\"0000000000000004\",\"parent_span_id\":\"0000000000000003\",\"span_kind\":\"child\"},\"producer\":{\"layer\":\"adapter\",\"component\":\"adapter_fs\"},\"auth_context_envelope_sha256\":\"c9a345be19386a3c8141f1a0655bc5f9cf92d3fbd809488c15d0d95f040f5607\",\"policy_decision_envelope_sha256\":\"20d12463be024b0ff0d92f53f9de19dab27ee7b08545f182081454452e10a412\",\"tool\":{\"adapter_id\":\"adapter.filesystem\",\"tool_name\":\"filesystem.delete\"},\"request\":{\"content_type\":\"application/json\",\"sha256\":\"5555555555555555555555555555555555555555555555555555555555555555\",\"size_bytes\":111},\"response\":{\"content_type\":\"application/json\",\"sha256\":\"6666666666666666666666666666666666666666666666666666666666666666\",\"size_bytes\":222},\"outcome\":{\"status\":\"ok\"}}"
+        },
+        {
+          "producer_id": "adapter_fs_alt",
+          "input_json": "{\"outcome\":{\"status\":\"ok\"},\"response\":{\"size_bytes\":222,\"sha256\":\"6666666666666666666666666666666666666666666666666666666666666666\",\"content_type\":\"application/json\"},\"request\":{\"size_bytes\":111,\"sha256\":\"5555555555555555555555555555555555555555555555555555555555555555\",\"content_type\":\"application/json\"},\"tool\":{\"tool_name\":\"filesystem.delete\",\"adapter_id\":\"adapter.filesystem\"},\"policy_decision_envelope_sha256\":\"20d12463be024b0ff0d92f53f9de19dab27ee7b08545f182081454452e10a412\",\"auth_context_envelope_sha256\":\"c9a345be19386a3c8141f1a0655bc5f9cf92d3fbd809488c15d0d95f040f5607\",\"producer\":{\"component\":\"adapter_fs\",\"layer\":\"adapter\"},\"trace\":{\"span_kind\":\"child\",\"parent_span_id\":\"0000000000000003\",\"span_id\":\"0000000000000004\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"},\"ended_at_ms\":1769817605200,\"started_at_ms\":1769817605000,\"record_type\":\"tool_call\",\"canon_version\":\"1\",\"spec_version\":\"1.0.0\"}"
+        }
+      ],
+      "expected": {
+        "canonical_json": "{\"auth_context_envelope_sha256\":\"c9a345be19386a3c8141f1a0655bc5f9cf92d3fbd809488c15d0d95f040f5607\",\"canon_version\":\"1\",\"ended_at_ms\":1769817605200,\"outcome\":{\"status\":\"ok\"},\"policy_decision_envelope_sha256\":\"20d12463be024b0ff0d92f53f9de19dab27ee7b08545f182081454452e10a412\",\"producer\":{\"component\":\"adapter_fs\",\"layer\":\"adapter\"},\"record_type\":\"tool_call\",\"request\":{\"content_type\":\"application/json\",\"sha256\":\"5555555555555555555555555555555555555555555555555555555555555555\",\"size_bytes\":111},\"response\":{\"content_type\":\"application/json\",\"sha256\":\"6666666666666666666666666666666666666666666666666666666666666666\",\"size_bytes\":222},\"spec_version\":\"1.0.0\",\"started_at_ms\":1769817605000,\"tool\":{\"adapter_id\":\"adapter.filesystem\",\"tool_name\":\"filesystem.delete\"},\"trace\":{\"parent_span_id\":\"0000000000000003\",\"span_id\":\"0000000000000004\",\"span_kind\":\"child\",\"trace_id\":\"4bf92f3577b34da6a3ce929d0e0e4736\"}}",
+        "sha256": "32e3ad8011afab5b2df2bfe71004d848721932592f7a106f8a6316a99391e08c",
+        "commit": {
+          "overall": "reject",
+          "classification": "UNAUTHORIZED_EXECUTION"
+        }
+      }
+    }
+  ]
+}
