@@ -25,6 +25,7 @@ The goal is not control or enforcement — only **audit-grade evidence** of what
 This is the single **blessed path** through the repo: take a decision record, hash it deterministically, sign it, and verify it **without reading any code**.
 
 **Prerequisites:** `python3`, `openssl`
+**Environment:** Tested on macOS/Linux. Windows users should use WSL.
 
 ### 1) Prepare the input (stable, intentional)
 
@@ -82,6 +83,9 @@ openssl dgst -sha256 \
   evidence_pack/decision_record.json
 ```
 
+**Note:** Demo keys are generated locally for illustration.
+In production, signing keys are managed by KMS/HSM and are never exported.
+
 ### 4) Verify (independent)
 
 ```bash
@@ -97,6 +101,9 @@ Successful verification prints:
 ```
 Verified OK
 ```
+
+Anyone with `decision_record.json`, `decision_record.sig`, and the public key can verify this result.
+**No repository access is required.**
 
 ---
 
@@ -160,5 +167,3 @@ The system is designed to produce **proof artifacts**, not to enforce policy or 
 ## License
 
 See `LICENSE`.
-
----
