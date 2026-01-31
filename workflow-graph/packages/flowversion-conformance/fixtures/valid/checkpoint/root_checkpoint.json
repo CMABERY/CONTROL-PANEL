@@ -1,0 +1,20 @@
+{
+  "v": 1,
+  "checkpoint_id": "cpt_01HV3X5Y6Z7890ABCDEF",
+  "parents": [],
+  "author": {
+    "user_id": "user_alice",
+    "display_name": "Alice Smith"
+  },
+  "message": "Initial workflow setup with HTTP request and transform nodes",
+  "tree": {
+    "state_hash": "abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890",
+    "behavioral_hash": "bcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890a",
+    "presentation_hash": "cdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890ab"
+  },
+  "created_at": "2024-01-15T10:00:00Z",
+  "tags": ["initial"],
+  "metadata": {
+    "ticket": "PROJ-123"
+  }
+}

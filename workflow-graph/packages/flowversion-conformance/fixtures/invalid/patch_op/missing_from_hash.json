@@ -1,0 +1,10 @@
+{
+  "_comment": "Invalid: PatchOp missing required 'from_hash' field (staging freeze violation)",
+  "_expected_error": "required property 'from_hash'",
+  "selector": "node:abc123",
+  "op": "replace",
+  "path": "/config/timeout",
+  "from": 30000,
+  "to": 60000,
+  "to_hash": "abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890"
+}

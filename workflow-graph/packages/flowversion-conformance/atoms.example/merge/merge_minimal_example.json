@@ -1,0 +1,15 @@
+{
+  "name": "merge_minimal_example",
+  "base": {
+    "id": "atom1",
+    "value": 1
+  },
+  "left": {
+    "id": "atom1",
+    "value": 2
+  },
+  "right": {
+    "id": "atom1",
+    "value": 3
+  }
+}

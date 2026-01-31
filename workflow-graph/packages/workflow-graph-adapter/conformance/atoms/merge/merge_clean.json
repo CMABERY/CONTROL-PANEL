@@ -1,0 +1,140 @@
+{
+  "name": "merge_clean_independent_edits",
+  "base": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "start"
+      },
+      {
+        "id": "a",
+        "type": "task",
+        "config": {
+          "task_key": "a"
+        }
+      },
+      {
+        "id": "b",
+        "type": "task",
+        "config": {
+          "task_key": "b"
+        }
+      },
+      {
+        "id": "end",
+        "type": "end"
+      }
+    ],
+    "edges": [
+      {
+        "from": "start",
+        "to": "a"
+      },
+      {
+        "from": "a",
+        "to": "end"
+      },
+      {
+        "from": "start",
+        "to": "b"
+      },
+      {
+        "from": "b",
+        "to": "end"
+      }
+    ]
+  },
+  "left": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "start"
+      },
+      {
+        "id": "a",
+        "type": "task",
+        "label": "A+",
+        "config": {
+          "task_key": "a"
+        }
+      },
+      {
+        "id": "b",
+        "type": "task",
+        "config": {
+          "task_key": "b"
+        }
+      },
+      {
+        "id": "end",
+        "type": "end"
+      }
+    ],
+    "edges": [
+      {
+        "from": "start",
+        "to": "a"
+      },
+      {
+        "from": "a",
+        "to": "end"
+      },
+      {
+        "from": "start",
+        "to": "b"
+      },
+      {
+        "from": "b",
+        "to": "end"
+      }
+    ]
+  },
+  "right": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "start"
+      },
+      {
+        "id": "a",
+        "type": "task",
+        "config": {
+          "task_key": "a"
+        }
+      },
+      {
+        "id": "b",
+        "type": "task",
+        "label": "B+",
+        "config": {
+          "task_key": "b"
+        }
+      },
+      {
+        "id": "end",
+        "type": "end"
+      }
+    ],
+    "edges": [
+      {
+        "from": "start",
+        "to": "a"
+      },
+      {
+        "from": "a",
+        "to": "end"
+      },
+      {
+        "from": "start",
+        "to": "b"
+      },
+      {
+        "from": "b",
+        "to": "end"
+      }
+    ]
+  },
+  "expect": {
+    "conflict_count": 0
+  }
+}

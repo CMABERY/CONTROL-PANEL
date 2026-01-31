@@ -1,0 +1,9 @@
+{
+  "_comment": "Invalid: atoms array must have minItems: 1 (localization requirement)",
+  "_expected_error": "minItems",
+  "issue_id": "bb0e8400-e29b-41d4-a716-446655440006",
+  "code": "SOME_ERROR",
+  "message": "Something is wrong",
+  "severity": "error",
+  "atoms": []
+}

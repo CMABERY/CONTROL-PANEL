@@ -1,0 +1,165 @@
+# GOVERNANCE REPOSITORY - CANONICAL MANIFEST
+# Generated: 2026-01-31T00:10:00Z
+# Source: governance-main (final remediated)
+# ===========================================
+
+## Summary
+
+Files: 115
+  SQL:        27
+  Shell:       4
+  JSON:       43
+  Markdown:   24
+  JavaScript: 13
+  YAML:        1
+  Text:        1
+  Other:       2
+
+## Structure
+
+governance/
+├── .github/workflows/ci.yml
+├── LICENSE
+├── README.md
+├── AUDIT_STAMP.json
+├── REPO_MANIFEST.txt
+│
+├── cpo/                              # CPO Governance Kernel
+│   ├── README.md
+│   ├── STATUS.json                   # Canonical phase status authority
+│   ├── docs/
+│   │   ├── P2_SUMMARY_v3.md
+│   │   ├── P3_SUMMARY.md
+│   │   ├── P3_SUMMARY_missing_field_semantics.md
+│   │   ├── P4_SUMMARY.md
+│   │   ├── P5_SUMMARY.md
+│   │   ├── P6_SUMMARY.md
+│   │   ├── P7_SUMMARY.md
+│   │   └── README.md
+│   ├── scripts/
+│   │   ├── deploy_p4.sh
+│   │   ├── deploy_p6.sh
+│   │   └── p7_ci_pipeline.sh         # Release closure entry point
+│   └── sql/
+│       ├── migrations/
+│       │   ├── 006_commit_action_p3_surgical.sql
+│       │   └── 009_commit_action_gate_integration_p3_surgical.sql
+│       ├── patches/
+│       │   ├── 011_drift_detection.sql
+│       │   ├── 011_drift_detection_selftest.sql
+│       │   ├── p2_artifact_table_registry_v3.sql
+│       │   ├── p2_durability_drill_wiring.sql
+│       │   ├── p2_durability_drill_wiring_v2_1.sql
+│       │   ├── p2_proof_durability_wiring.sql
+│       │   ├── p2_proof_write_aperture_coverage_v3.sql
+│       │   ├── p3_gate_engine_missing_field_patch.sql
+│       │   ├── p3_missing_field_semantics_patch.sql
+│       │   ├── p3_proof_default_deny_fail_closed.sql
+│       │   ├── p3_proof_error_bypasses_exceptions.sql
+│       │   ├── p3_proof_kernel_non_exceptionable.sql
+│       │   ├── p3_proof_missing_field_semantics.sql
+│       │   ├── p3_proof_no_semantic_bypass.sql
+│       │   ├── p3_proof_resolved_inputs_required.sql
+│       │   ├── p3_proof_toctou_closed.sql
+│       │   ├── p3_toctou_bypass_removal_patch.sql
+│       │   ├── p4_exception_expiry_enforcement_v3.sql
+│       │   ├── p4_exception_expiry_proofs_v3.sql
+│       │   ├── p6_change_control_kernel_patch.sql
+│       │   ├── p6_change_control_proofs.sql
+│       │   └── p6_ci_guard_change_control.sql
+│       ├── proofs/
+│       │   └── p3_ci_guard_no_semantic_toctou_bypass.sql
+│       ├── p7_evidence_pack.sql
+│       └── p7_privilege_audit.sql
+│
+└── workflow-graph/                   # FlowVersion + Reference Domain
+    ├── CHANGELOG.md
+    ├── LICENSE
+    ├── README.md
+    ├── package.json
+    ├── package-lock.json
+    ├── docs/
+    │   ├── REGEN-WORKFLOW.md
+    │   └── kit/
+    │       ├── A_version_control_design_template.md
+    │       ├── B_git_in_minecraft_analysis.md
+    │       ├── C_design_space_analysis.md
+    │       ├── domain_native_vcs_kit_utf8_bom.md
+    │       └── domain_native_vcs_reference_utf8_bom.md
+    └── packages/
+        ├── flowversion-conformance/  # Conformance Toolkit (CANONICAL)
+        │   ├── CHANGELOG.md
+        │   ├── README.md
+        │   ├── package.json
+        │   ├── goldens.json          # Contract truth source
+        │   ├── bundle.schema.json
+        │   ├── conformance.config.example.json
+        │   ├── domain-goldens.example.json
+        │   ├── bin/
+        │   │   └── flowversion-conformance.js
+        │   ├── src/
+        │   │   ├── index.js
+        │   │   ├── canonicalize.js
+        │   │   ├── config.js
+        │   │   ├── load-adapter.js
+        │   │   ├── validate-fixtures.js
+        │   │   ├── adapter-conformance.test.js
+        │   │   ├── canonicalization.test.js
+        │   │   └── schema.test.js
+        │   ├── scripts/
+        │   │   ├── release.sh        # Locked release runbook
+        │   │   ├── release_proof.mjs
+        │   │   ├── generate-goldens.mjs
+        │   │   ├── generate-domain-goldens.mjs
+        │   │   └── goldens.source.json
+        │   ├── fixtures/
+        │   │   ├── valid/...         (12 files)
+        │   │   └── invalid/...       (6 files)
+        │   └── atoms.example/
+        │       ├── validate/...
+        │       ├── diff/...
+        │       └── merge/...
+        │
+        └── workflow-graph-adapter/   # Reference Domain Adapter
+            ├── README.md
+            ├── package.json
+            ├── src/
+            │   └── workflow-adapter.js
+            ├── docs/
+            │   ├── five-questions.md
+            │   ├── adapter-spec.md
+            │   └── a-generated-spec.md
+            └── conformance/
+                ├── conformance.config.json
+                ├── domain-goldens.json
+                └── atoms/
+                    ├── validate/...
+                    ├── diff/...
+                    └── merge/...
+
+## Canonical Authority Files
+
+| File | Purpose |
+|------|---------|
+| cpo/STATUS.json | CPO phase completion status with evidence links |
+| AUDIT_STAMP.json | Machine-checkable audit evidence |
+| workflow-graph/packages/flowversion-conformance/goldens.json | FlowVersion contract truth |
+
+## Duplication Status
+
+FlowVersion goldens.json locations: 1 (no duplication)
+- workflow-graph/packages/flowversion-conformance/goldens.json
+
+## Phase Status (from STATUS.json)
+
+| Phase | State | Evidence Links |
+|-------|-------|----------------|
+| P1 | integrated_into_p2 | 2 (via P2 artifacts) |
+| P2 | complete | 5 |
+| P3 | complete | 11 |
+| P4 | complete | 2 |
+| P5 | complete | 2 |
+| P6 | complete | 3 |
+| P7 | complete | 3 |
+
+Total evidence links: 28 (all resolve)

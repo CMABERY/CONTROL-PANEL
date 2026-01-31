@@ -1,0 +1,16 @@
+{
+  "v": 1,
+  "entry_id": "aa0e8400-e29b-41d4-a716-446655440005",
+  "ref": "refs/heads/feature/experiment",
+  "old_value": "cpt_EXPERIMENT_HEAD",
+  "new_value": "cpt_01HV3X5Y6Z7890ABCDEF",
+  "action": "reset",
+  "message": "reset --hard to cpt_01HV3X5Y6Z7890ABCDEF",
+  "actor": {
+    "user_id": "user_alice",
+    "display_name": "Alice Smith"
+  },
+  "timestamp": "2024-01-15T16:00:00Z",
+  "recovery_hint": "To recover: fv reset --hard cpt_EXPERIMENT_HEAD",
+  "pre_action_snapshot": "fedcba0987654321fedcba0987654321fedcba0987654321fedcba0987654321"
+}

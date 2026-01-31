@@ -1,0 +1,7 @@
+{
+  "name": "validate_minimal_example",
+  "input": {
+    "id": "atom1",
+    "value": 1
+  }
+}

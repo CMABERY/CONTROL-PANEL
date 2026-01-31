@@ -1,0 +1,63 @@
+{
+  "name": "flowversion-conformance",
+  "version": "0.1.0",
+  "description": "Conformance harness for Domain-Native Version Control Kit adapters",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "flowversion-conformance": "./bin/flowversion-conformance.js"
+  },
+  "exports": {
+    ".": "./src/index.js",
+    "./schema": "./bundle.schema.json"
+  },
+  "scripts": {
+    "test": "node --test src/*.test.js",
+    "test:schema": "node --test src/schema.test.js",
+    "test:canon": "node --test src/canonicalization.test.js",
+    "validate": "node src/validate-fixtures.js",
+    "cli:test": "node ./bin/flowversion-conformance.js test",
+    "cli:validate": "node ./bin/flowversion-conformance.js validate",
+    "gen:goldens": "node scripts/generate-goldens.mjs",
+    "test:adapter": "node --test src/adapter-conformance.test.js",
+    "gen:domain-goldens": "node scripts/generate-domain-goldens.mjs"
+  },
+  "dependencies": {
+    "ajv": "^8.12.0",
+    "ajv-formats": "^2.1.1"
+  },
+  "keywords": [
+    "version-control",
+    "conformance",
+    "testing",
+    "domain-native-vcs"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "scripts/",
+    "fixtures/",
+    "atoms.example/",
+    "bundle.schema.json",
+    "goldens.json",
+    "README.md",
+    "CHANGELOG.md",
+    "conformance.config.example.json",
+    "domain-goldens.example.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flowversion/flowversion-conformance.git"
+  },
+  "homepage": "https://github.com/flowversion/flowversion-conformance#readme",
+  "bugs": {
+    "url": "https://github.com/flowversion/flowversion-conformance/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "merge_expect_conflict_example",
+  "base": {
+    "id": "atom1",
+    "value": 1
+  },
+  "left": {
+    "id": "atom1",
+    "value": 2
+  },
+  "right": {
+    "id": "atom1",
+    "value": 3
+  },
+  "expect": {
+    "conflict_count_min": 0,
+    "conflicts": [
+      {
+        "type": "edit_edit",
+        "severity": "error",
+        "selector_pattern": "^node:atom1"
+      }
+    ]
+  },
+  "meta": {
+    "note": "Illustrative example: adjust to your adapter's conflict taxonomy and selector scheme."
+  }
+}
