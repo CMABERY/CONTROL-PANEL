@@ -1,0 +1,6 @@
+{
+  "adapter": "../src/workflow-adapter.js",
+  "domain_goldens": "./domain-goldens.json",
+  "atom_fixtures": "./atoms",
+  "skip": []
+}

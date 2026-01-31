@@ -1,0 +1,14 @@
+{
+  "name": "workflow-graph-adapter-reference",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "flowversion-conformance": "file:../flowversion-conformance"
+  },
+  "scripts": {
+    "test": "flowversion-conformance test --config ./conformance/conformance.config.json",
+    "validate": "flowversion-conformance validate",
+    "gen:domain-goldens": "flowversion-conformance gen-domain-goldens --config ./conformance/conformance.config.json"
+  }
+}

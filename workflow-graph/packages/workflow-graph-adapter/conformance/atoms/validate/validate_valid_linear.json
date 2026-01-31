@@ -1,0 +1,36 @@
+{
+  "name": "validate_valid_linear",
+  "input": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "start"
+      },
+      {
+        "id": "task1",
+        "type": "task",
+        "config": {
+          "task_key": "t1"
+        }
+      },
+      {
+        "id": "end",
+        "type": "end"
+      }
+    ],
+    "edges": [
+      {
+        "from": "start",
+        "to": "task1"
+      },
+      {
+        "from": "task1",
+        "to": "end"
+      }
+    ]
+  },
+  "expect": {
+    "valid": true,
+    "issue_count": 0
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "name": "merge_edit_edit_conflict_on_node",
+  "base": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "start"
+      },
+      {
+        "id": "task1",
+        "type": "task",
+        "label": "Collect",
+        "config": {
+          "task_key": "collect"
+        }
+      },
+      {
+        "id": "end",
+        "type": "end"
+      }
+    ],
+    "edges": [
+      {
+        "from": "start",
+        "to": "task1"
+      },
+      {
+        "from": "task1",
+        "to": "end"
+      }
+    ]
+  },
+  "left": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "start"
+      },
+      {
+        "id": "task1",
+        "type": "task",
+        "label": "Collect (v2)",
+        "config": {
+          "task_key": "collect"
+        }
+      },
+      {
+        "id": "end",
+        "type": "end"
+      }
+    ],
+    "edges": [
+      {
+        "from": "start",
+        "to": "task1"
+      },
+      {
+        "from": "task1",
+        "to": "end"
+      }
+    ]
+  },
+  "right": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "start"
+      },
+      {
+        "id": "task1",
+        "type": "task",
+        "label": "Collect",
+        "config": {
+          "task_key": "collect",
+          "timeout_s": 30
+        }
+      },
+      {
+        "id": "end",
+        "type": "end"
+      }
+    ],
+    "edges": [
+      {
+        "from": "start",
+        "to": "task1"
+      },
+      {
+        "from": "task1",
+        "to": "end"
+      }
+    ]
+  },
+  "expect": {
+    "conflict_count": 1,
+    "conflicts": [
+      {
+        "type": "edit_edit",
+        "severity": "error",
+        "selector_pattern": "^node:task1$"
+      }
+    ],
+    "no_unexpected_conflicts": true
+  }
+}

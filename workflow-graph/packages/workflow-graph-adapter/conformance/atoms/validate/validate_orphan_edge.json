@@ -1,0 +1,31 @@
+{
+  "name": "validate_orphan_edge",
+  "input": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "start"
+      },
+      {
+        "id": "end",
+        "type": "end"
+      }
+    ],
+    "edges": [
+      {
+        "from": "start",
+        "to": "missing"
+      }
+    ]
+  },
+  "expect": {
+    "valid": false,
+    "issue_codes": [
+      "ORPHAN_EDGE"
+    ],
+    "atoms_mentioned": [
+      "^edge:",
+      "^node:missing$"
+    ]
+  }
+}

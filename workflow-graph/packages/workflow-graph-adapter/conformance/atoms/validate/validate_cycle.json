@@ -1,0 +1,57 @@
+{
+  "name": "validate_cycle_detected",
+  "input": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "start"
+      },
+      {
+        "id": "a",
+        "type": "task",
+        "config": {
+          "task_key": "a"
+        }
+      },
+      {
+        "id": "b",
+        "type": "task",
+        "config": {
+          "task_key": "b"
+        }
+      },
+      {
+        "id": "end",
+        "type": "end"
+      }
+    ],
+    "edges": [
+      {
+        "from": "start",
+        "to": "a"
+      },
+      {
+        "from": "a",
+        "to": "b"
+      },
+      {
+        "from": "b",
+        "to": "a"
+      },
+      {
+        "from": "b",
+        "to": "end"
+      }
+    ]
+  },
+  "expect": {
+    "valid": false,
+    "issue_codes": [
+      "CYCLE_DETECTED"
+    ],
+    "atoms_mentioned": [
+      "^node:a$",
+      "^node:b$"
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "validate_missing_start",
+  "input": {
+    "nodes": [
+      {
+        "id": "task1",
+        "type": "task",
+        "config": {
+          "task_key": "t1"
+        }
+      },
+      {
+        "id": "end",
+        "type": "end"
+      }
+    ],
+    "edges": [
+      {
+        "from": "task1",
+        "to": "end"
+      }
+    ]
+  },
+  "expect": {
+    "valid": false,
+    "issue_codes": [
+      "MISSING_OR_AMBIGUOUS_START_NODE"
+    ],
+    "atoms_mentioned": [
+      "^workflow:root$"
+    ]
+  }
+}
