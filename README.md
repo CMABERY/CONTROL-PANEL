@@ -1,135 +1,164 @@
-# Governance
+# CONTROL-PANEL: Tamper-Evident Evidence for AI-Assisted Decisions
 
-Unified governance and version control repository implementing **governance through physics, not policy**.
+## What this is
 
-**Repository status:** COMPLETE and canonically locked.
+This repository demonstrates how AI-assisted actions can be recorded as cryptographically verifiable decision records.
+The goal is not control or enforcement — only **audit-grade evidence** of what happened.
 
-This repository is a **static proof bundle**:
-- Contracts are locked (closed-world).
-- Evidence is content-addressed and replayable.
-- No residual design surface remains without an explicit, versioned canon revision.
+## What it proves
 
-Canonical closeout: `CANONICAL_CLOSEOUT.md`  
-Keystone integration contract: `INTEGRATION_MANUAL.md`
+* AI actions can be logged without modifying the model
+* Decision records are hashed and signed
+* Evidence can be independently verified
+* Records are exportable for audit/compliance review
 
-## Projects
+## What it is not
+
+* Not a policy engine
+* Not an AI safety framework
+* Not production software
+
+---
+
+## Run the Evidence Flow (2 minutes)
+
+This is the single **blessed path** through the repo: take a decision record, hash it deterministically, sign it, and verify it **without reading any code**.
+
+**Prerequisites:** `python3`, `openssl`
+
+### 1) Prepare the input (stable, intentional)
+
+```bash
+mkdir -p evidence_pack
+cp workflow-graph/packages/keystone-gate-runtime/goldens/integration.e2e.goldens.json evidence_pack/source_vector.json
+```
+
+### 2) Run command (decision happens, record emitted)
+
+```bash
+python3 - <<'PY'
+import json, hashlib, pathlib
+
+src = pathlib.Path('evidence_pack/source_vector.json')
+data = json.loads(src.read_text(encoding='utf-8'))
+
+vec = next(v for v in data['vectors'] if v['name'] == 'e2e_allow_model_call_ok')
+step = next(s for s in vec['steps'] if s['record_type'] == 'policy_decision')
+
+record = step['input']
+canonical_json = step['canonical_json']
+expected_sha256 = step['sha256']
+
+computed_sha256 = hashlib.sha256(canonical_json.encode('utf-8')).hexdigest()
+assert computed_sha256 == expected_sha256, (computed_sha256, expected_sha256)
+
+out_dir = pathlib.Path('evidence_pack')
+(out_dir / 'decision_record.json').write_text(canonical_json + '\n', encoding='utf-8')
+(out_dir / 'decision_record.sha256').write_text(computed_sha256 + '\n', encoding='utf-8')
+
+print('Decision result:', record['decision']['result'])
+print('Record emitted:', out_dir / 'decision_record.json')
+print('SHA-256:', computed_sha256)
+PY
+```
+
+You should see output similar to:
+
+```
+Decision result: allow
+Record emitted: evidence_pack/decision_record.json
+SHA-256: <hash>
+```
+
+### 3) Hash + sign output
+
+```bash
+openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out evidence_pack/signing_key_rsa.pem
+openssl pkey -in evidence_pack/signing_key_rsa.pem -pubout -out evidence_pack/signing_key_rsa.pub.pem
+
+openssl dgst -sha256 \
+  -sign evidence_pack/signing_key_rsa.pem \
+  -out evidence_pack/decision_record.sig \
+  evidence_pack/decision_record.json
+```
+
+### 4) Verify (independent)
+
+```bash
+openssl dgst -sha256 \
+  -verify evidence_pack/signing_key_rsa.pub.pem \
+  -signature evidence_pack/decision_record.sig \
+  evidence_pack/decision_record.json \
+  | tee evidence_pack/verify.out
+```
+
+Successful verification prints:
+
+```
+Verified OK
+```
+
+---
+
+## Evidence Pack
+
+This produces an **Evidence Pack** consisting of:
+
+* Decision record (`evidence_pack/decision_record.json`)
+* Cryptographic hash (`evidence_pack/decision_record.sha256`)
+* Signature (`evidence_pack/decision_record.sig`)
+* Verification output (`evidence_pack/verify.out`)
+
+All artifacts are independently verifiable and exportable.
+
+---
+
+## Deep dive (optional)
+
+### Repository status
+
+**Repository status:** Week 1 demo repo. Scope intentionally limited to evidence flow + verification.
 
 ### CPO Governance Kernel (`/cpo`)
 
-A PostgreSQL-native governance kernel where:
-- All state mutations flow through a **single write aperture** (`cpo.commit_action`)
-- Enforcement is **fail-closed by default**
-- Governance is **physics, not policy**—rules cannot disable themselves
-- Every invariant is **proven via deterministic self-tests**
+A PostgreSQL-native governance kernel where all state mutation flows through a single write aperture (`cpo.commit_action`).
+Enforcement is fail-closed by default; invariants are proven via deterministic self-tests.
 
-**Operational Mantra:**
-```
-Authority is authenticated.
-Physics outranks policy.
-Enumerations are structural.
-Evaluation is closed-world.
-Exceptions are expiring authority.
-Drift becomes ledger artifacts.
-Change control governs the rules.
-Every commit re-proves the world.
-```
+### FlowVersion Conformance Toolkit
 
-**Phase Status:** See `cpo/STATUS.json` for canonical status authority.
+`/workflow-graph/packages/flowversion-conformance`
 
-| Phase | Name | Status |
-|-------|------|--------|
-| P1 | Policy Check Registry | ✅ Complete |
-| P2 | Persistence / Write Aperture | ✅ Complete |
-| P3 | Gate Integration / TOCTOU | ✅ Complete |
-| P4 | Exception Expiry | ✅ Complete |
-| P5 | Drift Detection | ✅ Complete |
-| P6 | Change Control | ✅ Complete (v3.1) |
-| P7 | Release Closure Pipeline | ✅ Complete |
+A domain-native version control system that generalizes Git’s trust properties beyond files, enforcing correctness via canonicalization, schema validation, and golden vectors.
 
-### FlowVersion Conformance Toolkit (`/workflow-graph/packages/flowversion-conformance`)
+### Keystone Gate Envelope System
 
-A domain-native version control kit that:
-- Generalizes Git's trust properties beyond files/lines
-- Enforces correctness via **kernel/adapter contract + conformance harness**
-- Provides certification-grade validation with schema, canonicalization, and golden vectors
+`/workflow-graph/packages/keystone-gate-runtime`
 
-**Key Components:**
-- JSON Schema validation (Draft 2020-12)
-- Deterministic canonicalization (integer-only for portability)
-- Golden vectors with SHA-256 hashes
-- CLI: `npx flowversion-conformance test`
+Implements canonical decision envelopes with:
 
+* Deterministic JSON canonicalization
+* SHA-256 content addressing
+* Schema validation (Draft 2020-12)
+* Golden vectors for reproducibility
+* Replay and verification plumbing
 
-### Keystone Gate Envelope System (`/workflow-graph/packages/keystone-gate-runtime`)
-
-A contract-locked envelope + governance + replay system spanning:
-
-- **Phase 1** canonical envelope schemas + goldens (Draft 2020-12, RFC 8785/JCS)
-- **Phase 2** integration tests and failure taxonomy
-- **Phase 3** operational wiring (FlowVersion envelope ops + CPO `commit_action`)
-- **Phase 4** cross-layer conformance + adapter certification
-- **Phase 5** replay plumbing (forensic / constrained / invariant)
-- **Phase 6** replay UI & controlled expansion specification (artifact-only)
-
-**Canonical docs:**
-- `INTEGRATION_MANUAL.md`
-- `docs/keystone/CANONICALIZATION_RULES.md`
-- `docs/keystone/PHASE6_REPLAY_UI_SPEC.md`
-
-**Run tests:**
-```bash
-cd workflow-graph
-npm -w keystone-gate-runtime test
-```
-
-### Workflow Graph Reference (`/workflow-graph/packages/workflow-graph-adapter`)
-
-A reference domain implementation demonstrating the full FlowVersion vertical slice:
-- Workflow graph adapter with `canonicalizeDomain`, `diff`, `merge`, `validate`
-- Domain-specific goldens and fixtures
-- Five-questions specification
-
-## Integration Model
-
-These projects use **modular connection** (not merge, not independence):
+### Integration model
 
 ```
-[Domain Content]
-    → FlowVersion: canonicalize → validate → hash
-    → CPO: commit_action (content as artifact payload)
-    → CPO: gate evaluation (governance)
-    → CPO: persist (action_log + artifacts)
+[Domain Action]
+   → Canonicalize
+   → Hash
+   → Sign
+   → Verify
+   → Persist as evidence
 ```
 
-FlowVersion provides content integrity; CPO provides governance enforcement.
+The system is designed to produce **proof artifacts**, not to enforce policy or constrain behavior.
 
-## Running the CPO Pipeline
-
-```bash
-cd cpo
-export DATABASE_URL="postgres://..."
-./scripts/p7_ci_pipeline.sh
-```
-
-This creates a fresh database, applies migrations, runs all proofs, and generates evidence artifacts.
-
-## Running FlowVersion Conformance
-
-```bash
-cd workflow-graph/packages/flowversion-conformance
-npm ci
-npm test
-npx flowversion-conformance test
-```
-
-## Principles
-
-Both projects enforce:
-- **No semantic privilege**: capabilities come from authenticated context, not JSON strings
-- **Fail-closed defaults**: unknown states block, never pass silently
-- **Deterministic proofs**: CI is the source of truth
-- **Governance over governance**: rules that govern changing rules cannot be disabled by policy
+---
 
 ## License
 
-See LICENSE file.
+See `LICENSE`.
+
+---
